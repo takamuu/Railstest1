@@ -698,143 +698,340 @@
 #  elavator.get_diff()
 
 
-# 自分の得意な言語で
-# Let's チャレンジ！！
-height, width = gets.split(" ").map(&:to_i)
+# # 自分の得意な言語で
+# # Let's チャレンジ！！
+# height, width = gets.split(" ").map(&:to_i)
 
-all_errata = []
+# all_errata = []
 
-height.times do
-  all_errata.push(gets.chomp.split("").map(&:to_s))
-end
-p all_errata
+# height.times do
+#   all_errata.push(gets.chomp.split("").map(&:to_s))
+# end
+# p all_errata
 
-all_score = []
-height.times do
-  all_score.push(gets.split(" ").map(&:to_i))
-end
+# all_score = []
+# height.times do
+#   all_score.push(gets.split(" ").map(&:to_i))
+# end
 
-total_score = 0
+# total_score = 0
 
-all_errata.each_with_index do |errata, number|
-  errata.each_with_index do |circle_cross, position|
-    if circle_cross == "o"
-      total_score += all_score[number][position]
-    end
-  end
-end
+# all_errata.each_with_index do |errata, number|
+#   errata.each_with_index do |circle_cross, position|
+#     if circle_cross == "o"
+#       total_score += all_score[number][position]
+#     end
+#   end
+# end
 
-p total_score
+# p total_score
 
 
-# B051:汚れてしまった魔法陣
-# 入力例１
-# 3
-# 6 1 8
-# 7 5 3
-# 2 0 0
+# # B051:汚れてしまった魔法陣
+# # 入力例１
+# # 3
+# # 6 1 8
+# # 7 5 3
+# # 2 0 0
 
-# 出力例1
-# 6 1 8
-# 7 5 3
-# 2 9 4
+# # 出力例1
+# # 6 1 8
+# # 7 5 3
+# # 2 9 4
 
-# 入力例
-# 5
-# 1 15 8 24 0
-# 19 3 21 12 10
-# 13 0 20 6 4
-# 25 9 2 18 11
-# 7 16 14 5 23
+# # 入力例
+# # 5
+# # 1 15 8 24 0
+# # 19 3 21 12 10
+# # 13 0 20 6 4
+# # 25 9 2 18 11
+# # 7 16 14 5 23
 
-# 出力例2
-# 1 15 8 24 17
-# 19 3 21 12 10
-# 13 22 20 6 4
-# 25 9 2 18 11
-# 7 16 14 5 23
+# # 出力例2
+# # 1 15 8 24 17
+# # 19 3 21 12 10
+# # 13 22 20 6 4
+# # 25 9 2 18 11
+# # 7 16 14 5 23
 
-magic_circle = []
-input_N.times do
-  magic_circle << gets.chomp.split(" ").map(&:to_i)
-end
+# magic_circle = []
+# input_N.times do
+#   magic_circle << gets.chomp.split(" ").map(&:to_i)
+# end
 
-max_row_value = 0
-magic_circle.each { |i|
-  if !i.include?(0)
-    max_row_value = i.sum
-  end
-}
+# max_row_value = 0
+# magic_circle.each { |i|
+#   if !i.include?(0)
+#     max_row_value = i.sum
+#   end
+# }
 
-sum_value = 0
-v = 0
-secondary_index = []
-magic_circle.each_with_index { |magic, i|
-  magic.each_with_index { |num, j|
-    if num == 0
-      while v < input_N
-        sum_value += magic_circle[v][j]
-        v += 1
-      end
-      magic_circle[i][j] = max_row_value - sum_value
-      v = 0
-      sum_value = 0
-    end
+# sum_value = 0
+# v = 0
+# secondary_index = []
+# magic_circle.each_with_index { |magic, i|
+#   magic.each_with_index { |num, j|
+#     if num == 0
+#       while v < input_N
+#         sum_value += magic_circle[v][j]
+#         v += 1
+#       end
+#       magic_circle[i][j] = max_row_value - sum_value
+#       v = 0
+#       sum_value = 0
+#     end
+#   }
+# }
+
+# magic_circle.each { |l|
+#   puts l.join(" ")
+# }
+# # 縦に0が並んだ場合を考慮すれば解決するはず！
+
+
+# # B068:チョコの分割-------------------
+# @height, width = gets.split(" ").map(&:to_i)
+
+# chocolates = []
+# @height.times do
+#   chocolates << gets.chomp.split(" ").map(&:to_i)
+# end
+
+# height_num = 0
+# alice_start_num = 0
+# alice_end_num = 0
+# bob_start_num = 1
+# bob_end_num = width - 1
+# judge_array = []
+# @replace = []
+# alice_array = []
+# bob_array = []
+# @pa = []
+# chocolates.each { |array|
+#   array.each_with_index { |alice, i|
+#     break if i == bob_end_num
+#     alice_end_num = i
+#     bob_start_num = i + 1
+
+#     judge_array << (array[alice_start_num..alice_end_num].sum == array[bob_start_num..bob_end_num].sum)
+#     if (array[alice_start_num..alice_end_num].sum == array[bob_start_num..bob_end_num].sum)
+#       alice_array = array[alice_start_num..alice_end_num].map! { |x| x = "A" }
+#       bob_array = array[bob_start_num..bob_end_num].map! { |x| x = "B" }
+#       @pa << (alice_array + bob_array).join
+#     end
+#   }
+# }
+
+# def judgement(answer)
+#   counter = 0
+#   answer.each { |i|
+#     if i == true
+#       counter += 1
+#     end
+#   }
+#   if counter == @height
+#     puts "Yes"
+#     puts @pa
+#   else
+#     puts "No"
+#   end
+# end
+
+# judgement(judge_array)
+
+
+# # B055:タクシー料金----------------
+# require "pry"
+# taxi_type, @distance = gets.split(" ").map(&:to_i)
+
+# array = []
+# taxi_type.times {
+#   array << gets.split(" ").map(&:to_i)
+# }
+
+# @first_ride_distance = 0
+# @first_fare = 0
+# @addition_distance = 0
+# @additional_fare = 0
+# @count = 0
+# @lowest_price = []
+
+# def fare_calc(array_element)
+#   @count = 0
+#   @lowest_distance = array_element[0]
+#   @first_fare = array_element[1]
+#   @additional_fare = array_element[3]
+#   until @distance < @lowest_distance
+#     @lowest_distance = @lowest_distance + array_element[2]
+#     @count += 1
+#   end
+#   @lowest_price << @first_fare + (@additional_fare * @count)
+# end
+
+# array.each { |array_element| fare_calc(array_element) }
+
+# puts @lowest_price.minmax.join(" ")
+
+
+# # B040:たのしい暗号解読----------
+# require "pry"
+# N, alphabet = gets.split(" ")
+# alphabet_array = []
+# p alphabet_array = alphabet.chomp.split("")
+
+# p encryption = gets.chomp.split("")
+
+# index_array = []
+# encryption.each { |character|
+#   index_array << alphabet_array.find_index(character)
+# }
+# p index_array
+# index_array.gsub!(/15,
+#                15 => "p")
+# #                "E" => "3",
+# #                "G" => "6",
+# #                "I" => "1",
+# #                "O" => "0",
+# #                "S" => "5",
+# #                "Z" => "2")
+# p index_array
+
+# # B081:花壇のロープ-------------------------------
+# height, width = gets.split(" ").map(&:to_i)
+
+# flower_beds = []
+# height.times { flower_beds << gets.chomp.split("") }
+
+# flower_index = []
+
+# flower_beds.each_with_index { |flower_bed_array, vertical|
+#     flower_bed_array.each_with_index { |flower_array, i|
+#       flower_index << [vertical, i] if flower_array == "#"
+#     }
+# }
+
+# total_ropes = flower_index.length * 4
+
+# @vartical_position = []
+# @horizontal_position = []
+
+# def vartical_side_by_side(element)
+#     element.each { |first_position|
+#         @vartical_position << [first_position[0] + 1, first_position[1]]
+#     }
+# end
+
+# def horizontal_side_by_side(element)
+#     element.each { |first_position|
+#         @horizontal_position << [first_position[0], first_position[1] + 1]
+#     }
+# end
+
+# vartical_side_by_side(flower_index)
+# horizontal_side_by_side(flower_index)
+# side_by_side = (@vartical_position & flower_index).count + (@horizontal_position & flower_index).count
+# p total_ropes - (side_by_side * 2)
+
+
+# # B 暗号-----------------------------------
+# class Code
+#   attr_accessor :cipher_text
+#   attr_reader :alphabets, :alphabet_checker, :change_string_list, :replace_num, :replace_string
+  
+#   def initialize(replace_num, replace_string, cipher_text)
+#     @cipher_text = cipher_text
+#     @replace_num = replace_num.to_i
+#     @replace_string = replace_string
+#     @replace_strings = replace_string.chars
+#     @alphabets = [*'a'..'z']
+#     @alphabet_checker = alphabets.join('|')
+#     @change_string_list = @replace_strings.zip(alphabets).to_h
+#   end
+
+#   def change_question
+#     @cipher_text = cipher_text.gsub(/#{alphabet_checker}/, change_string_list)
+#   end
+  
+#   def crack_the_code
+#     replace_num.times { change_question }
+#     puts cipher_text
+#   end
+# end
+# # 置換回数, 置換文字
+# replace_num, replace_string = gets.split.map(&:to_s)
+# # 暗号文
+# cipher_text = gets.chomp.to_s
+# Code.new(replace_num, replace_string, cipher_text).crack_the_code
+
+# B091:山頂を探せ--------------------------------
+
+@height = gets.to_i
+
+@mountain_peaks = []
+@height.times { @mountain_peaks << gets.chomp.split(" ").map(&:to_i) }
+
+@mountain_index = []
+@mountain_peaks.each_with_index { |mountain_array, vertical_index|
+  mountain_array.each_index { |horizontal_index|
+    @mountain_index << [vertical_index, horizontal_index]
   }
 }
 
-magic_circle.each { |l|
-  puts l.join(" ")
-}
-# 縦に0が並んだ場合を考慮すれば解決するはず！
+@altitude_around = []
+@current_altitude = []
 
-
-# B068:チョコの分割-------------------
-@height, width = gets.split(" ").map(&:to_i)
-
-chocolates = []
-@height.times do
-  chocolates << gets.chomp.split(" ").map(&:to_i)
+def get_around(element)
+  element.each { |current_index|
+    @current_altitude = @mountain_peaks[current_index[0]][current_index[1]]
+    left_judge_range(current_index)
+    right_judge_range(current_index)
+    up_judge_range(current_index)
+    down_judge_range(current_index)
+    comparison
+    @altitude_around = []
+  }
 end
 
-height_num = 0
-alice_start_num = 0
-alice_end_num = 0
-bob_start_num = 1
-bob_end_num = width - 1
-judge_array = []
-@replace = []
-alice_array = []
-bob_array = []
-@pa = []
-chocolates.each { |array|
-  array.each_with_index { |alice, i|
-    break if i == bob_end_num
-    alice_end_num = i
-    bob_start_num = i + 1
-
-    judge_array << (array[alice_start_num..alice_end_num].sum == array[bob_start_num..bob_end_num].sum)
-    if (array[alice_start_num..alice_end_num].sum == array[bob_start_num..bob_end_num].sum)
-      alice_array = array[alice_start_num..alice_end_num].map! { |x| x = "A" }
-      bob_array = array[bob_start_num..bob_end_num].map! { |x| x = "B" }
-      @pa << (alice_array + bob_array).join
-    end
-  }
-}
-
-def judgement(answer)
-  counter = 0
-  answer.each { |i|
-    if i == true
-      counter += 1
-    end
-  }
-  if counter == @height
-    puts "Yes"
-    puts @pa
+def left_judge_range(index)
+  if -1 < index[0] - 1
+    @altitude_around << @mountain_peaks[index[0] - 1][index[1]]
   else
-    puts "No"
+    @altitude_around << 0
   end
 end
 
-judgement(judge_array)
+def right_judge_range(index)
+  if index[0] + 1 < @height
+    @altitude_around << @mountain_peaks[index[0] + 1][index[1]]
+  else
+    @altitude_around << 0
+  end
+end
+
+def up_judge_range(index)
+  if -1 < index[1] - 1
+    @altitude_around << @mountain_peaks[index[0]][index[1] - 1]
+  else
+    @altitude_around << 0
+  end
+end
+
+def down_judge_range(index)
+  if index[1] + 1 < @height
+    @altitude_around << @mountain_peaks[index[0]][index[1] + 1]
+  else
+    @altitude_around << 0
+  end
+end
+
+@answer = []
+
+def comparison
+  if @altitude_around.all? { |i| i < @current_altitude }
+    @answer << @current_altitude
+  end
+end
+
+get_around(@mountain_index)
+puts @answer.sort.reverse
+
