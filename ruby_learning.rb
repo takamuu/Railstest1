@@ -965,73 +965,149 @@
 
 # B091:山頂を探せ--------------------------------
 
-@height = gets.to_i
+# @height = gets.to_i
 
-@mountain_peaks = []
-@height.times { @mountain_peaks << gets.chomp.split(" ").map(&:to_i) }
+# @mountain_peaks = []
+# @height.times { @mountain_peaks << gets.chomp.split(" ").map(&:to_i) }
 
-@mountain_index = []
-@mountain_peaks.each_with_index { |mountain_array, vertical_index|
-  mountain_array.each_index { |horizontal_index|
-    @mountain_index << [vertical_index, horizontal_index]
-  }
+# @mountain_index = []
+# @mountain_peaks.each_with_index { |mountain_array, vertical_index|
+#   mountain_array.each_index { |horizontal_index|
+#     @mountain_index << [vertical_index, horizontal_index]
+#   }
+# }
+
+# @altitude_around = []
+# @current_altitude = []
+
+# def get_around(element)
+#   element.each { |current_index|
+#     @current_altitude = @mountain_peaks[current_index[0]][current_index[1]]
+#     left_judge_range(current_index)
+#     right_judge_range(current_index)
+#     up_judge_range(current_index)
+#     down_judge_range(current_index)
+#     comparison
+#     @altitude_around = []
+#   }
+# end
+
+# def left_judge_range(index)
+#   if -1 < index[0] - 1
+#     @altitude_around << @mountain_peaks[index[0] - 1][index[1]]
+#   else
+#     @altitude_around << 0
+#   end
+# end
+
+# def right_judge_range(index)
+#   if index[0] + 1 < @height
+#     @altitude_around << @mountain_peaks[index[0] + 1][index[1]]
+#   else
+#     @altitude_around << 0
+#   end
+# end
+
+# def up_judge_range(index)
+#   if -1 < index[1] - 1
+#     @altitude_around << @mountain_peaks[index[0]][index[1] - 1]
+#   else
+#     @altitude_around << 0
+#   end
+# end
+
+# def down_judge_range(index)
+#   if index[1] + 1 < @height
+#     @altitude_around << @mountain_peaks[index[0]][index[1] + 1]
+#   else
+#     @altitude_around << 0
+#   end
+# end
+
+# @answer = []
+
+# def comparison
+#   if @altitude_around.all? { |i| i < @current_altitude }
+#     @answer << @current_altitude
+#   end
+# end
+
+# get_around(@mountain_index)
+# puts @answer.sort.reverse
+
+# paiza C055:ログのフィルター--------------------------------
+# number_string = gets.chomp.to_i
+# char_extract = gets.chomp.to_s
+
+# char_array = []
+# number_string.times {
+#   char_array << gets.chomp.to_s
+# }
+
+# output_array = []
+# char_array.each { |char|
+#   output_array << char if char.include?(char_extract)
+# }
+
+# if output_array == []
+#   puts "None"
+# else
+#   puts output_array
+# end
+
+# C055:ログのフィルター【クラス化】--------------------------
+class LogFilter
+  attr_accessor :output_array
+  attr_reader :number_string, :char_extract, :char_array
+
+  def initialize(data)
+    @output_array = data[:output_array]
+    @number_string = data[:number_string]
+    @char_extract = data[:char_extract]
+    @char_array = data[:char_array]
+  end
+
+  def run_filter
+    number_string.times { char_array << gets.chomp.to_s }
+  end
+
+  def output
+    # output_array.empty? ? puts "None" : puts output_array
+    if output_array == []
+      puts "None"
+    else
+      puts output_array
+    end
+  end
+end
+
+number_string = gets.chomp.to_i
+char_extract = gets.chomp.to_s
+logfilter = LogFilter.new(
+  output_array: output_array,
+  number_string: number_string,
+  char_extract: char_extract,
+  char_array: char_array
+)
+logfilter.run_filter
+logfilter.output
+
+# C075:ポイント払い------------------------------------
+balance, bus_rides = gets.split(" ").map(&:to_i)
+
+fare = []
+total_point = 0
+bus_rides.times { 
+    fare = gets.to_i
+    if fare <= total_point
+        total_point -= fare
+    else
+        balance -= fare
+        total_point += (fare / 10)
+    end
+    puts "#{balance} #{total_point}"
 }
 
-@altitude_around = []
-@current_altitude = []
-
-def get_around(element)
-  element.each { |current_index|
-    @current_altitude = @mountain_peaks[current_index[0]][current_index[1]]
-    left_judge_range(current_index)
-    right_judge_range(current_index)
-    up_judge_range(current_index)
-    down_judge_range(current_index)
-    comparison
-    @altitude_around = []
-  }
-end
-
-def left_judge_range(index)
-  if -1 < index[0] - 1
-    @altitude_around << @mountain_peaks[index[0] - 1][index[1]]
-  else
-    @altitude_around << 0
-  end
-end
-
-def right_judge_range(index)
-  if index[0] + 1 < @height
-    @altitude_around << @mountain_peaks[index[0] + 1][index[1]]
-  else
-    @altitude_around << 0
-  end
-end
-
-def up_judge_range(index)
-  if -1 < index[1] - 1
-    @altitude_around << @mountain_peaks[index[0]][index[1] - 1]
-  else
-    @altitude_around << 0
-  end
-end
-
-def down_judge_range(index)
-  if index[1] + 1 < @height
-    @altitude_around << @mountain_peaks[index[0]][index[1] + 1]
-  else
-    @altitude_around << 0
-  end
-end
-
-@answer = []
-
-def comparison
-  if @altitude_around.all? { |i| i < @current_altitude }
-    @answer << @current_altitude
-  end
-end
-
-get_around(@mountain_index)
-puts @answer.sort.reverse
-
+# 【クラス化】--------------
+class Busride
+    attr_accessor :fare, :total_point, :balance, :bus_rides
