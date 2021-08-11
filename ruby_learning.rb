@@ -1111,3 +1111,158 @@ bus_rides.times {
 # 【クラス化】--------------
 class Busride
     attr_accessor :fare, :total_point, :balance, :bus_rides
+
+
+# C077:【30万人記念問題】レポートの評価--------------------------
+    deadline, question = gets.split.map(&:to_i)
+
+score = 0
+
+allocation = 100 / question
+
+def evalution(score)
+    case score
+    when 80..100
+        puts "A"
+    when 70..79
+        puts "B"
+    when 60..69
+        puts "C"
+    when 0..59
+        puts "D"
+    end
+end
+
+question.times do
+    expiration_date, correct_answer = gets.split.map(&:to_i)
+    score = allocation * correct_answer
+    if expiration_date < 1
+    elsif expiration_date < 10
+        score = (score * 0.8).floor 
+    elsif  expiration_date > 9
+        score = 0
+    end
+    evalution(score)
+end
+
+position = gets.split(" ").map(&:to_i)
+
+@front_move, @right_move, @back_move, @left_move = gets.split(" ").map(&:to_i)
+@direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
+# p @direction
+
+order_num = gets.to_i
+
+@action_order = []
+
+
+def current_direction(direction)
+ case direction.to_a
+ when { F: @front_move, R: @right_move, B: @back_move, L: @left_move }.to_a
+     if @direction_order == "R"
+         @direction = { L: @left_move, F: @front_move, R: @right_move, B: @back_move }
+     elsif @direction_order == "L"
+         @direction = { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }
+     elsif @direction_order == "B"
+         @direction = { B: @back_move, L: @left_move, F: @front_move, R: @right_move }
+     end
+ when { L: @left_move, F: @front_move, R: @right_move, B: @back_move }.to_a
+     if @direction_order == "R"
+         @direction = { B: @back_move, L: @left_move, F: @front_move, R: @right_move }
+     elsif @direction_order == "L"
+         @direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
+     elsif @direction_order == "B"
+         @direction = { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }
+     end
+ when { B: @back_move, L: @left_move, F: @front_move, R: @right_move }.to_a
+     if @direction_order == "R"
+         @direction = { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }
+     elsif @direction_order == "L"
+         @direction = { L: @left_move, F: @front_move, R: @right_move, B: @back_move }
+     elsif @direction_order == "B"
+         @direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
+     end
+ when { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }.to_a
+     if @direction_order == "R"
+         @direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
+     elsif @direction_order == "L"
+         @direction = { B: @back_move, L: @left_move, F: @front_move, R: @right_move }
+     elsif @direction_order == "B"
+         @direction = { L: @left_move, F: @front_move, R: @right_move, B: @back_move }
+     end
+ end
+end
+
+
+order_num.times { 
+    @action_order = gets.split(" ").map(&:to_s)  
+        if @action_order[0] == "t"
+            @direction_order = @action_order[1]
+            current_direction(@direction)
+        elsif @action_order[0] == "m"
+            case @action_order[1]
+            when "F"
+                @direction.each_with_index { |element, index|
+                if element.include?(:F)
+                    case index
+                    when 0
+                        position[1] += @direction[:F]
+                    when 1
+                        position[0] += @direction[:F]
+                    when 2
+                        position[1] -= @direction[:F] 
+                    when 3        
+                        position[0] -= @direction[:F]
+                    end
+                end
+                }
+            when "R"
+                 @direction.each_with_index { |element, index|
+                if element.include?(:R)
+                    case index
+                    when 0
+                        position[1] += @direction[:R]
+                    when 1
+                        position[0] += @direction[:R]
+                    when 2
+                        position[1] -= @direction[:R] 
+                    when 3        
+                        position[0] -= @direction[:R]
+                    end
+                end
+                }
+            when "B"
+                 @direction.each_with_index { |element, index|
+                if element.include?(:B)
+                    case index
+                    when 0
+                        position[1] += @direction[:B]
+                    when 1
+                        position[0] += @direction[:B]
+                    when 2
+                        position[1] -= @direction[:B] 
+                    when 3        
+                        position[0] -= @direction[:B]
+                    end
+                end
+                }
+            when "L"
+                @direction.each_with_index { |element, index|
+                if element.include?(:L)
+                    case index
+                    when 0
+                        position[1] += @direction[:L]
+                    when 1
+                        position[0] += @direction[:L]
+                    when 2
+                        position[1] -= @direction[:L] 
+                    when 3        
+                        position[0] -= @direction[:L]
+                    end
+                end
+                }
+            end
+        end
+    
+}
+puts "#{position[0]}" + " " + "#{position[1]}"
