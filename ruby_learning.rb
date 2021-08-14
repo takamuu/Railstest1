@@ -1055,214 +1055,384 @@
 #   puts output_array
 # end
 
-# C055:ログのフィルター【クラス化】--------------------------
-class LogFilter
-  attr_accessor :output_array
-  attr_reader :number_string, :char_extract, :char_array
+# # C055:ログのフィルター【クラス化】--------------------------
+# class LogFilter
+#   attr_accessor :output_array
+#   attr_reader :number_string, :char_extract, :char_array
 
-  def initialize(data)
-    @output_array = data[:output_array]
-    @number_string = data[:number_string]
-    @char_extract = data[:char_extract]
-    @char_array = data[:char_array]
-  end
+#   def initialize(data)
+#     @output_array = data[:output_array]
+#     @number_string = data[:number_string]
+#     @char_extract = data[:char_extract]
+#     @char_array = data[:char_array]
+#   end
 
-  def run_filter
-    number_string.times { char_array << gets.chomp.to_s }
-  end
+#   def run_filter
+#     number_string.times { char_array << gets.chomp.to_s }
+#   end
 
-  def output
-    # output_array.empty? ? puts "None" : puts output_array
-    if output_array == []
-      puts "None"
-    else
-      puts output_array
-    end
-  end
-end
+#   def output
+#     # output_array.empty? ? puts "None" : puts output_array
+#     if output_array == []
+#       puts "None"
+#     else
+#       puts output_array
+#     end
+#   end
+# end
 
-number_string = gets.chomp.to_i
-char_extract = gets.chomp.to_s
-logfilter = LogFilter.new(
-  output_array: output_array,
-  number_string: number_string,
-  char_extract: char_extract,
-  char_array: char_array
-)
-logfilter.run_filter
-logfilter.output
+# number_string = gets.chomp.to_i
+# char_extract = gets.chomp.to_s
+# logfilter = LogFilter.new(
+#   output_array: output_array,
+#   number_string: number_string,
+#   char_extract: char_extract,
+#   char_array: char_array
+# )
+# logfilter.run_filter
+# logfilter.output
 
-# C075:ポイント払い------------------------------------
-balance, bus_rides = gets.split(" ").map(&:to_i)
+# # C075:ポイント払い------------------------------------
+# balance, bus_rides = gets.split(" ").map(&:to_i)
 
-fare = []
-total_point = 0
-bus_rides.times { 
-    fare = gets.to_i
-    if fare <= total_point
-        total_point -= fare
-    else
-        balance -= fare
-        total_point += (fare / 10)
-    end
-    puts "#{balance} #{total_point}"
-}
+# fare = []
+# total_point = 0
+# bus_rides.times { 
+#     fare = gets.to_i
+#     if fare <= total_point
+#         total_point -= fare
+#     else
+#         balance -= fare
+#         total_point += (fare / 10)
+#     end
+#     puts "#{balance} #{total_point}"
+# }
 
-# 【クラス化】--------------
-class Busride
-    attr_accessor :fare, :total_point, :balance, :bus_rides
-
-
-# C077:【30万人記念問題】レポートの評価--------------------------
-    deadline, question = gets.split.map(&:to_i)
-
-score = 0
-
-allocation = 100 / question
-
-def evalution(score)
-    case score
-    when 80..100
-        puts "A"
-    when 70..79
-        puts "B"
-    when 60..69
-        puts "C"
-    when 0..59
-        puts "D"
-    end
-end
-
-question.times do
-    expiration_date, correct_answer = gets.split.map(&:to_i)
-    score = allocation * correct_answer
-    if expiration_date < 1
-    elsif expiration_date < 10
-        score = (score * 0.8).floor 
-    elsif  expiration_date > 9
-        score = 0
-    end
-    evalution(score)
-end
-
-position = gets.split(" ").map(&:to_i)
-
-@front_move, @right_move, @back_move, @left_move = gets.split(" ").map(&:to_i)
-@direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
-# p @direction
-
-order_num = gets.to_i
-
-@action_order = []
+# # 【クラス化】--------------
+# class Busride
+#     attr_accessor :fare, :total_point, :balance, :bus_rides
 
 
-def current_direction(direction)
- case direction.to_a
- when { F: @front_move, R: @right_move, B: @back_move, L: @left_move }.to_a
-     if @direction_order == "R"
-         @direction = { L: @left_move, F: @front_move, R: @right_move, B: @back_move }
-     elsif @direction_order == "L"
-         @direction = { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }
-     elsif @direction_order == "B"
-         @direction = { B: @back_move, L: @left_move, F: @front_move, R: @right_move }
-     end
- when { L: @left_move, F: @front_move, R: @right_move, B: @back_move }.to_a
-     if @direction_order == "R"
-         @direction = { B: @back_move, L: @left_move, F: @front_move, R: @right_move }
-     elsif @direction_order == "L"
-         @direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
-     elsif @direction_order == "B"
-         @direction = { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }
-     end
- when { B: @back_move, L: @left_move, F: @front_move, R: @right_move }.to_a
-     if @direction_order == "R"
-         @direction = { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }
-     elsif @direction_order == "L"
-         @direction = { L: @left_move, F: @front_move, R: @right_move, B: @back_move }
-     elsif @direction_order == "B"
-         @direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
-     end
- when { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }.to_a
-     if @direction_order == "R"
-         @direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
-     elsif @direction_order == "L"
-         @direction = { B: @back_move, L: @left_move, F: @front_move, R: @right_move }
-     elsif @direction_order == "B"
-         @direction = { L: @left_move, F: @front_move, R: @right_move, B: @back_move }
-     end
- end
-end
+# # C077:【30万人記念問題】レポートの評価--------------------------
+#     deadline, question = gets.split.map(&:to_i)
+
+# score = 0
+
+# allocation = 100 / question
+
+# def evalution(score)
+#     case score
+#     when 80..100
+#         puts "A"
+#     when 70..79
+#         puts "B"
+#     when 60..69
+#         puts "C"
+#     when 0..59
+#         puts "D"
+#     end
+# end
+
+# question.times do
+#     expiration_date, correct_answer = gets.split.map(&:to_i)
+#     score = allocation * correct_answer
+#     if expiration_date < 1
+#     elsif expiration_date < 10
+#         score = (score * 0.8).floor 
+#     elsif  expiration_date > 9
+#         score = 0
+#     end
+#     evalution(score)
+# end
+
+# position = gets.split(" ").map(&:to_i)
+
+# @front_move, @right_move, @back_move, @left_move = gets.split(" ").map(&:to_i)
+# @direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
+# # p @direction
+
+# order_num = gets.to_i
+
+# @action_order = []
 
 
-order_num.times { 
-    @action_order = gets.split(" ").map(&:to_s)  
-        if @action_order[0] == "t"
-            @direction_order = @action_order[1]
-            current_direction(@direction)
-        elsif @action_order[0] == "m"
-            case @action_order[1]
-            when "F"
-                @direction.each_with_index { |element, index|
-                if element.include?(:F)
-                    case index
-                    when 0
-                        position[1] += @direction[:F]
-                    when 1
-                        position[0] += @direction[:F]
-                    when 2
-                        position[1] -= @direction[:F] 
-                    when 3        
-                        position[0] -= @direction[:F]
-                    end
-                end
-                }
-            when "R"
-                 @direction.each_with_index { |element, index|
-                if element.include?(:R)
-                    case index
-                    when 0
-                        position[1] += @direction[:R]
-                    when 1
-                        position[0] += @direction[:R]
-                    when 2
-                        position[1] -= @direction[:R] 
-                    when 3        
-                        position[0] -= @direction[:R]
-                    end
-                end
-                }
-            when "B"
-                 @direction.each_with_index { |element, index|
-                if element.include?(:B)
-                    case index
-                    when 0
-                        position[1] += @direction[:B]
-                    when 1
-                        position[0] += @direction[:B]
-                    when 2
-                        position[1] -= @direction[:B] 
-                    when 3        
-                        position[0] -= @direction[:B]
-                    end
-                end
-                }
-            when "L"
-                @direction.each_with_index { |element, index|
-                if element.include?(:L)
-                    case index
-                    when 0
-                        position[1] += @direction[:L]
-                    when 1
-                        position[0] += @direction[:L]
-                    when 2
-                        position[1] -= @direction[:L] 
-                    when 3        
-                        position[0] -= @direction[:L]
-                    end
-                end
-                }
-            end
-        end
+# def current_direction(direction)
+#  case direction.to_a
+#  when { F: @front_move, R: @right_move, B: @back_move, L: @left_move }.to_a
+#      if @direction_order == "R"
+#          @direction = { L: @left_move, F: @front_move, R: @right_move, B: @back_move }
+#      elsif @direction_order == "L"
+#          @direction = { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }
+#      elsif @direction_order == "B"
+#          @direction = { B: @back_move, L: @left_move, F: @front_move, R: @right_move }
+#      end
+#  when { L: @left_move, F: @front_move, R: @right_move, B: @back_move }.to_a
+#      if @direction_order == "R"
+#          @direction = { B: @back_move, L: @left_move, F: @front_move, R: @right_move }
+#      elsif @direction_order == "L"
+#          @direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
+#      elsif @direction_order == "B"
+#          @direction = { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }
+#      end
+#  when { B: @back_move, L: @left_move, F: @front_move, R: @right_move }.to_a
+#      if @direction_order == "R"
+#          @direction = { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }
+#      elsif @direction_order == "L"
+#          @direction = { L: @left_move, F: @front_move, R: @right_move, B: @back_move }
+#      elsif @direction_order == "B"
+#          @direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
+#      end
+#  when { R: @right_move ,B: @back_move, L: @left_move, F: @front_move }.to_a
+#      if @direction_order == "R"
+#          @direction = { F: @front_move, R: @right_move, B: @back_move, L: @left_move }
+#      elsif @direction_order == "L"
+#          @direction = { B: @back_move, L: @left_move, F: @front_move, R: @right_move }
+#      elsif @direction_order == "B"
+#          @direction = { L: @left_move, F: @front_move, R: @right_move, B: @back_move }
+#      end
+#  end
+# end
+
+
+# order_num.times { 
+#     @action_order = gets.split(" ").map(&:to_s)  
+#         if @action_order[0] == "t"
+#             @direction_order = @action_order[1]
+#             current_direction(@direction)
+#         elsif @action_order[0] == "m"
+#             case @action_order[1]
+#             when "F"
+#                 @direction.each_with_index { |element, index|
+#                 if element.include?(:F)
+#                     case index
+#                     when 0
+#                         position[1] += @direction[:F]
+#                     when 1
+#                         position[0] += @direction[:F]
+#                     when 2
+#                         position[1] -= @direction[:F] 
+#                     when 3        
+#                         position[0] -= @direction[:F]
+#                     end
+#                 end
+#                 }
+#             when "R"
+#                  @direction.each_with_index { |element, index|
+#                 if element.include?(:R)
+#                     case index
+#                     when 0
+#                         position[1] += @direction[:R]
+#                     when 1
+#                         position[0] += @direction[:R]
+#                     when 2
+#                         position[1] -= @direction[:R] 
+#                     when 3        
+#                         position[0] -= @direction[:R]
+#                     end
+#                 end
+#                 }
+#             when "B"
+#                  @direction.each_with_index { |element, index|
+#                 if element.include?(:B)
+#                     case index
+#                     when 0
+#                         position[1] += @direction[:B]
+#                     when 1
+#                         position[0] += @direction[:B]
+#                     when 2
+#                         position[1] -= @direction[:B] 
+#                     when 3        
+#                         position[0] -= @direction[:B]
+#                     end
+#                 end
+#                 }
+#             when "L"
+#                 @direction.each_with_index { |element, index|
+#                 if element.include?(:L)
+#                     case index
+#                     when 0
+#                         position[1] += @direction[:L]
+#                     when 1
+#                         position[0] += @direction[:L]
+#                     when 2
+#                         position[1] -= @direction[:L] 
+#                     when 3        
+#                         position[0] -= @direction[:L]
+#                     end
+#                 end
+#                 }
+#             end
+#         end
     
-}
-puts "#{position[0]}" + " " + "#{position[1]}"
+# }
+# puts "#{position[0]}" + " " + "#{position[1]}"
+
+# Paiza C086:ハンドルネームの生成---------------------------------
+# letter = gets.chomp.to_s
+
+# 以下どちらでもOK
+# p letter.delete('aiueoAIUEO')
+# puts letter.gsub!(/a|i|u|e|o/i, "")
+
+
+# # Paiza C039 :古代の数式--------------------------------------
+# letter = gets.chomp.to_s
+
+# # p letter.count("/") + letter.count("<") * 10
+# p letter.split('+')
+
+# クラス化---------
+# class AncientMath
+#     attr_accessor :ancient_char
+
+#     def initialize(ancient_char)
+#         @ancient_char = ancient_char
+#     end
+
+#     def count_letters
+#         @ancient_char.count("/") + @ancient_char.count("<") * 10
+#     end
+
+#     def output
+#         puts count_letters
+#     end
+# end
+
+# letter = gets.chomp.to_s
+# ancient_math = AncientMath.new(letter) 
+# ancient_math.output
+# <<<<<///+<<</// をコンソールに入力すると動作確認できる
+
+# # Paiza C021:暴風域にいますか？-------------------------------------
+# circle_x, circle_y, radius_sc, radius_bc = gets.split.map(&:to_i)
+
+# people = gets.to_i
+
+# people.times { person_place_x, person_place_y = gets.split.map(&:to_i)
+#   if radius_sc ** 2 <= (person_place_x - circle_x) ** 2 + (person_place_y - circle_y) ** 2 && 
+#     (person_place_x - circle_x) ** 2 + (person_place_y - circle_y) ** 2 <= radius_bc ** 2
+#     puts "yes"
+#   else
+#     puts "no"
+#   end
+# }
+
+# Paiza B095:カラオケ大会------------------
+# class User
+#     attr_accessor :name
+
+#     def initialize(name)
+#         @name = name
+#     end
+# end
+# user = User.new('Alice')
+# p user.name
+# user.name = 'Bob'
+# p user.name
+
+# # Paiza B
+# singers, song_length = gets.split(" ").map(&:to_i)
+
+# correct_pitch = []
+# song_length.times { correct_pitch << gets.to_i }
+
+# singers_pitch = []
+# all_singers_pitch = []
+
+# singers.times {
+#   song_length.times { singers_pitch << gets.to_i }
+#   all_singers_pitch << singers_pitch
+#   singers_pitch = []
+# }
+
+# def score_calculation(calc)
+#   case calc.abs
+#   when 0..5
+#     0
+#   when 6..10
+#     1
+#   when 11..20
+#     2
+#   when 21..30
+#     3
+#   when 31..1000
+#     5
+#   end
+# end
+
+# pitch_score = 100
+# all_singers_score = []
+# num = 0
+# all_singers_pitch.each { |pitch|
+#   song_length.times {
+#     difference = correct_pitch[num] - pitch[num]
+#     pitch_score -= score_calculation(difference)
+#     num += 1
+#   }
+#   num = 0
+#   if pitch_score < 0
+#     all_singers_score << 0
+#   else
+#     all_singers_score << pitch_score
+#   end
+# }
+
+# p all_singers_score.max
+
+# Paiza 023:クジの当選番号--------------------------------
+# winning_number = gets.split.map(&:to_i)
+# lottery_tickets = gets.to_i
+
+# lottery_tickets.times {
+#     p lottery_number = gets.split.map(&:to_i)
+
+#     p (lottery_number & winning_number).size
+# }
+
+# クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+class Lottery
+  attr_reader :lottery_tickets, :winning_number
+
+  def initialize(lottery_tickets, winning_number)
+    @lottery_tickets = lottery_tickets
+    @winning_number = winning_number
+  end
+
+  def count_winning_number
+    lottery_tickets.times {
+      lottery_number = gets.split.map(&:to_i)
+      p (lottery_number & winning_number).size
+    }
+  end
+end
+
+winning_number = gets.split.map(&:to_i)
+lottery_tickets = gets.to_i
+
+lottery = Lottery.new(lottery_tickets, winning_number)
+lottery.count_winning_number
+
+# クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+class Lottery
+  attr_reader :lottery_tickets, :winning_number
+
+  def initialize(args)
+    @lottery_tickets = args[:lottery_tickets]
+    @winning_number = args[:winning_number]
+  end
+
+  def count_winning_number
+    lottery_tickets.times {
+      lottery_number = gets.split.map(&:to_i)
+      p (lottery_number & winning_number).size
+    }
+  end
+end
+
+winning_number = gets.split.map(&:to_i)
+lottery_tickets = gets.to_i
+
+args = { lottery_tickets: lottery_tickets, winning_number: winning_number }
+lottery = Lottery.new(args)
+lottery.count_winning_number
