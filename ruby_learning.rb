@@ -1379,7 +1379,7 @@
 
 # p all_singers_score.max
 
-# Paiza 023:クジの当選番号--------------------------------
+# Paiza C023:クジの当選番号--------------------------------
 # winning_number = gets.split.map(&:to_i)
 # lottery_tickets = gets.to_i
 
