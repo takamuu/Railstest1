@@ -1331,53 +1331,53 @@
 # p user.name
 
 # # Paiza B
-singers, song_length = gets.split(" ").map(&:to_i)
+# singers, song_length = gets.split(" ").map(&:to_i)
 
-correct_pitch = []
-song_length.times { correct_pitch << gets.to_i }
+# correct_pitch = []
+# song_length.times { correct_pitch << gets.to_i }
 
-singers_pitch = []
-all_singers_pitch = []
+# singers_pitch = []
+# all_singers_pitch = []
 
-singers.times {
-  song_length.times { singers_pitch << gets.to_i }
-  all_singers_pitch << singers_pitch
-  singers_pitch = []
-}
+# singers.times {
+#   song_length.times { singers_pitch << gets.to_i }
+#   all_singers_pitch << singers_pitch
+#   singers_pitch = []
+# }
 
-def score_calculation(calc)
-  case calc.abs
-  when 0..5
-    0
-  when 6..10
-    1
-  when 11..20
-    2
-  when 21..30
-    3
-  when 31..1000
-    5
-  end
-end
+# def score_calculation(calc)
+#   case calc.abs
+#   when 0..5
+#     0
+#   when 6..10
+#     1
+#   when 11..20
+#     2
+#   when 21..30
+#     3
+#   when 31..1000
+#     5
+#   end
+# end
 
-pitch_score = 100
-all_singers_score = []
-num = 0
-all_singers_pitch.each { |pitch|
-  song_length.times {
-    difference = correct_pitch[num] - pitch[num]
-    pitch_score -= score_calculation(difference)
-    num += 1
-  }
-  num = 0
-  if pitch_score < 0
-    all_singers_score << 0
-  else
-    all_singers_score << pitch_score
-  end
-}
+# pitch_score = 100
+# all_singers_score = []
+# num = 0
+# all_singers_pitch.each { |pitch|
+#   song_length.times {
+#     difference = correct_pitch[num] - pitch[num]
+#     pitch_score -= score_calculation(difference)
+#     num += 1
+#   }
+#   num = 0
+#   if pitch_score < 0
+#     all_singers_score << 0
+#   else
+#     all_singers_score << pitch_score
+#   end
+# }
 
-p all_singers_score.max
+# p all_singers_score.max
 
 # Paiza C023:クジの当選番号--------------------------------
 # winning_number = gets.split.map(&:to_i)
@@ -1437,31 +1437,106 @@ p all_singers_score.max
 # lottery = Lottery.new(args)
 # lottery.count_winning_number
 
-# Paiza C052:ゲームの画面--------------------------------
-height, width = gets.split.map(&:to_i)
-distance_x, distance_y = gets.split.map(&:to_i)
+# # Paiza C052:ゲームの画面--------------------------------
+# height, width = gets.split.map(&:to_i)
+# distance_x, distance_y = gets.split.map(&:to_i)
 
-p (height * distance_y.abs) + (width * distance_x.abs) - (distance_x.abs * distance_y.abs)
+# p (height * distance_y.abs) + (width * distance_x.abs) - (distance_x.abs * distance_y.abs)
+
+# # クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class Scroll
+#   attr_reader :height, :width, :distance_x, :distance_y
+
+#   def initialize(args)
+#     @height = args[:height]
+#     @width = args[:width]
+#     @distance_x = args[:distance_x]
+#     @distance_y = args[:distance_y]
+#   end
+
+#   def redraw_area
+#     p (height * distance_y.abs) + (width * distance_x.abs) - (distance_x.abs * distance_y.abs)
+#   end
+# end
+
+# height, width = gets.split.map(&:to_i)
+# distance_x, distance_y = gets.split.map(&:to_i)
+
+# args = { height: height, width: width, distance_x: distance_x, distance_y: distance_y }
+# scroll = Scroll.new(args)
+# scroll.redraw_area
+
+# Paiza C019:完全数とほぼ完全数--------------------------------------
+# int_num = gets.to_i
+# divisors_array = int_num.times.map { gets.to_i }
+
+# def divisor(num)
+#   result = []
+#   i = 1
+#   while i < num
+#     remainder = num % i
+#     if remainder == 0
+#       result << i
+#     end
+#     i += 1
+#   end
+#   return result
+# end
+
+# divisors_array.each { |num|
+#   if num == divisor(num).sum
+#     puts "perfect"
+#   elsif (num - divisor(num).sum).abs <= 1
+#     puts "nearly"
+#   else
+#     puts "neither"
+#   end
+# }
 
 # クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class Scroll
-  attr_reader :height, :width, :distance_x, :distance_y
+# class PerfectNumJudgment
+#   attr_reader :divisors_array
 
-  def initialize(args)
-    @height = args[:height].abs
-    @width = args[:width].abs
-    @distance_x = args[:distance_x].abs
-    @distance_y = args[:distance_y].abs
-  end
+#   def initialize(args)
+#     @divisors_array = args[:divisors_array]
+#   end
 
-  def redraw_area
-    p (height * distance_y.abs) + (width * distance_x.abs) - (distance_x.abs * distance_y.abs)
-  end
-end
+#   def divisor(num)
+#     result = []
+#     i = 1
+#     while i < num
+#       remainder = num % i
+#       if remainder == 0
+#         result << i
+#       end
+#       i += 1
+#     end
+#     return result
+#   end
 
-height, width = gets.split.map(&:to_i)
-distance_x, distance_y = gets.split.map(&:to_i)
+#   def sum_value(num)
+#     divisor(num).sum
+#   end
 
-args = { height: height, width: width, distance_x: distance_x, distance_y: distance_y }
-scroll = Scroll.new(args)
-scroll.redraw_area
+#   def result_output
+#     divisors_array.each { |num| judge(num) }
+#   end
+
+#   def judge(num)
+#     value = sum_value(num)
+#     if num == value
+#       puts "perfect"
+#     elsif (num - value).abs == 1
+#       puts "nearly"
+#     else
+#       puts "neither"
+#     end
+#   end
+# end
+
+# int_num = gets.to_i
+# divisors_array = int_num.times.map { gets.to_i }
+
+# args = { divisors_array: divisors_array }
+# perfect_num_judgment = PerfectNumJudgment.new(args)
+# perfect_num_judgment.result_output
