@@ -1540,3 +1540,53 @@
 # args = { divisors_array: divisors_array }
 # perfect_num_judgment = PerfectNumJudgment.new(args)
 # perfect_num_judgment.result_output
+
+# # Paiza C059:パリティチェック--------------------------------------
+# inputs_num = gets.to_i
+# two_dimensions_array = inputs_num.times.map { gets.chomp.split("").map(&:to_i) }
+
+# def binary_calc(binary)
+#   binary.count(1).odd? ? 1 : 0
+# end
+
+# answer = 4.times.map do |i|
+#   binary = two_dimensions_array.transpose[i]
+#   binary_calc(binary)
+# end
+
+# puts answer.join
+
+# クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+class ParityCheck
+  attr_accessor :answer
+  attr_reader :two_dimensions_array
+
+  def initialize(args)
+    @two_dimensions_array = args[:two_dimensions_array]
+    @answer = args[:answer]
+  end
+
+  def binary_check(binary)
+    binary.count(1).odd? ? 1 : 0
+  end
+
+  def array_transpose
+    self.answer = 4.times.map do |i|
+      binary = two_dimensions_array.transpose[i]
+      binary_check(binary)
+    end
+  end
+
+  def output
+    puts self.answer.join
+  end
+end
+
+inputs_num = gets.to_i
+two_dimensions_array = inputs_num.times.map { gets.chomp.split("").map(&:to_i) }
+
+args = { two_dimensions_array: two_dimensions_array }
+paritycheck = ParityCheck.new(args)
+paritycheck.array_transpose
+paritycheck.output
