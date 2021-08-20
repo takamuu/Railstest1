@@ -1556,37 +1556,89 @@
 
 # puts answer.join
 
-# クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# # クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-class ParityCheck
-  attr_accessor :answer
-  attr_reader :two_dimensions_array
+# class ParityCheck
+#   attr_accessor :answer
+#   attr_reader :two_dimensions_array
 
-  def initialize(args)
-    @two_dimensions_array = args[:two_dimensions_array]
-    @answer = args[:answer]
-  end
+#   def initialize(args)
+#     @two_dimensions_array = args[:two_dimensions_array]
+#     @answer = args[:answer]
+#   end
 
-  def binary_check(binary)
-    binary.count(1).odd? ? 1 : 0
-  end
+#   def binary_check(binary)
+#     binary.count(1).odd? ? 1 : 0
+#   end
 
-  def array_transpose
-    self.answer = 4.times.map do |i|
-      binary = two_dimensions_array.transpose[i]
-      binary_check(binary)
-    end
-  end
+#   def array_transpose
+#     self.answer = 4.times.map do |i|
+#       binary = two_dimensions_array.transpose[i]
+#       binary_check(binary)
+#     end
+#   end
 
-  def output
-    puts self.answer.join
+#   def output
+#     puts self.answer.join
+#   end
+# end
+
+# inputs_num = gets.to_i
+# two_dimensions_array = inputs_num.times.map { gets.chomp.split("").map(&:to_i) }
+
+# args = { two_dimensions_array: two_dimensions_array }
+# paritycheck = ParityCheck.new(args)
+# paritycheck.array_transpose
+# paritycheck.output
+
+Paiza C010:安息の地を求めて-------------------------------------
+construction_a, construction_b, rudius = gets.split.map(&:to_i)
+
+shades = gets.to_i
+
+shade_position = shades.times.map { gets.split.map(&:to_i) }
+
+def distance_judge(a, b, x, y, rudius)
+  if ((x - a) ** 2 + (y - b) ** 2) >= rudius ** 2
+    puts "silent"
+  else
+    puts "noisy"
   end
 end
 
-inputs_num = gets.to_i
-two_dimensions_array = inputs_num.times.map { gets.chomp.split("").map(&:to_i) }
+shade_position.each do |position|
+  shade_x = position[0]
+  shade_y = position[1]
+  distance_judge(construction_a, construction_b, shade_x, shade_y, rudius)
+end
 
-args = { two_dimensions_array: two_dimensions_array }
-paritycheck = ParityCheck.new(args)
-paritycheck.array_transpose
-paritycheck.output
+# クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+class LandRest
+  attr_reader :shade_position, :construction_a, :construction_b, :rudius
+
+  def initialize(args)
+    @shade_position = args[:shade_position]
+    @construction_a = args[:construction_a]
+    @construction_b = args[:construction_b]
+    @rudius = args[:rudius]
+  end
+
+  def array_assignment
+    shade_position.each do |shade_x, shade_y|
+      rest_area?(shade_x, shade_y) ? (puts "silent") : (puts "noisy")
+    end
+  end
+  
+  def rest_area?(x, y)
+    ((x - construction_a) ** 2 + (y - construction_b) ** 2) >= rudius ** 2
+  end
+end
+
+construction_a, construction_b, rudius = gets.split.map(&:to_i)
+shades = gets.to_i
+shade_position = shades.times.map { gets.split.map(&:to_i) }
+
+args = { construction_a: construction_a, construction_b: construction_b, rudius: rudius, shade_position: shade_position }
+landrest = LandRest.new(args)
+landrest.array_assignment
+
