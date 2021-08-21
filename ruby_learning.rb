@@ -1591,54 +1591,103 @@
 # paritycheck.array_transpose
 # paritycheck.output
 
-Paiza C010:安息の地を求めて-------------------------------------
-construction_a, construction_b, rudius = gets.split.map(&:to_i)
+# # Paiza C010:安息の地を求めて-------------------------------------
+# construction_a, construction_b, rudius = gets.split.map(&:to_i)
 
-shades = gets.to_i
+# shades = gets.to_i
 
-shade_position = shades.times.map { gets.split.map(&:to_i) }
+# shade_position = shades.times.map { gets.split.map(&:to_i) }
 
-def distance_judge(a, b, x, y, rudius)
-  if ((x - a) ** 2 + (y - b) ** 2) >= rudius ** 2
-    puts "silent"
-  else
-    puts "noisy"
-  end
-end
+# def distance_judge(a, b, x, y, rudius)
+#   if ((x - a) ** 2 + (y - b) ** 2) >= rudius ** 2
+#     puts "silent"
+#   else
+#     puts "noisy"
+#   end
+# end
 
-shade_position.each do |position|
-  shade_x = position[0]
-  shade_y = position[1]
-  distance_judge(construction_a, construction_b, shade_x, shade_y, rudius)
-end
+# shade_position.each do |position|
+#   shade_x = position[0]
+#   shade_y = position[1]
+#   distance_judge(construction_a, construction_b, shade_x, shade_y, rudius)
+# end
+
+# # クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class LandRest
+#   attr_reader :shade_position, :construction_a, :construction_b, :rudius
+
+#   def initialize(args)
+#     @shade_position = args[:shade_position]
+#     @construction_a = args[:construction_a]
+#     @construction_b = args[:construction_b]
+#     @rudius = args[:rudius]
+#   end
+
+#   def array_assignment
+#     shade_position.each do |shade_x, shade_y|
+#       rest_area?(shade_x, shade_y) ? (puts "silent") : (puts "noisy")
+#     end
+#   end
+  
+#   def rest_area?(x, y)
+#     ((x - construction_a) ** 2 + (y - construction_b) ** 2) >= rudius ** 2
+#   end
+# end
+
+# construction_a, construction_b, rudius = gets.split.map(&:to_i)
+# shades = gets.to_i
+# shade_position = shades.times.map { gets.split.map(&:to_i) }
+
+# args = { construction_a: construction_a, construction_b: construction_b, rudius: rudius, shade_position: shade_position }
+# landrest = LandRest.new(args)
+# landrest.array_assignment
+
+# # Paiza C079:カードを集める----------------------------------
+# card_buy, card_type = gets.split.map(&:to_i)
+
+# card_array = card_buy.times.map { gets.to_i }
+
+# default_arr = Array(1..card_type)
+# uniq_arr = card_array.uniq
+
+# if uniq_arr.sort != default_arr
+#   puts "unlucky"
+# else
+#   card_array.each.with_index(1) do |card, index|
+#     uniq_arr.delete(card)
+#     uniq_arr
+#     if uniq_arr.empty?
+#       puts index
+#       break
+#     end
+#   end
+# end
 
 # クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class LandRest
-  attr_reader :shade_position, :construction_a, :construction_b, :rudius
+class CollectCard
+  attr_accessor :default_arr, :uniq_arr
+  attr_reader :card_array
 
   def initialize(args)
-    @shade_position = args[:shade_position]
-    @construction_a = args[:construction_a]
-    @construction_b = args[:construction_b]
-    @rudius = args[:rudius]
+    @default_arr = args[:default_arr]
+    @uniq_arr = args[:uniq_arr]
+    @card_array = args[:card_array]
   end
 
-  def array_assignment
-    shade_position.each do |shade_x, shade_y|
-      rest_area?(shade_x, shade_y) ? (puts "silent") : (puts "noisy")
+  def luck_judge
+    default_arr = [*1..card_type]
+    uniq_arr = card_array.uniq
+    if uniq_arr.sort != default_arr
+      puts "unlucky"
+    else
+      card_array.each.with_index(1) do |card, index|
+        uniq_arr.delete(card)
+        uniq_arr
+        if uniq_arr.empty?
+          puts index
+          break
+        end
+      end
     end
   end
-  
-  def rest_area?(x, y)
-    ((x - construction_a) ** 2 + (y - construction_b) ** 2) >= rudius ** 2
-  end
 end
-
-construction_a, construction_b, rudius = gets.split.map(&:to_i)
-shades = gets.to_i
-shade_position = shades.times.map { gets.split.map(&:to_i) }
-
-args = { construction_a: construction_a, construction_b: construction_b, rudius: rudius, shade_position: shade_position }
-landrest = LandRest.new(args)
-landrest.array_assignment
-
