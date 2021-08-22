@@ -1663,31 +1663,82 @@
 #   end
 # end
 
-# クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class CollectCard
-  attr_accessor :default_arr, :uniq_arr
-  attr_reader :card_array
+# # クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class CollectCard
+#   attr_accessor :default_arr, :uniq_arr
+#   attr_reader :card_array
 
+#   def initialize(args)
+#     @default_arr = args[:default_arr]
+#     @uniq_arr = args[:uniq_arr]
+#     @card_array = args[:card_array]
+#   end
+
+#   def luck_judge
+#     default_arr = [*1..card_type]
+#     uniq_arr = card_array.uniq
+#     if uniq_arr.sort != default_arr
+#       puts "unlucky"
+#     else
+#       card_array.each.with_index(1) do |card, index|
+#         uniq_arr.delete(card)
+#         uniq_arr
+#         if uniq_arr.empty?
+#           puts index
+#           break
+#         end
+#       end
+#     end
+#   end
+# end
+
+# # Paiza C087:数字の規則-------------------------------
+# int_num = gets.chomp.to_i
+
+# sum_num = int_num.to_i + int_num.to_s.reverse.to_i
+
+# p sum_num.to_i if sum_num.to_s == sum_num.to_s.reverse
+
+# while sum_num.to_s != sum_num.to_s.reverse
+#   sum_num = sum_num.to_i + sum_num.to_s.reverse.to_i
+#   p sum_num.to_i if sum_num.to_s == sum_num.to_s.reverse
+# end
+
+# クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+class NumberRule
+  attr_accessor :sum_num
+  attr_reader :int_num
+  
   def initialize(args)
-    @default_arr = args[:default_arr]
-    @uniq_arr = args[:uniq_arr]
-    @card_array = args[:card_array]
+    @int_num = args[:int_num]
+    @sum_num = 0
   end
 
-  def luck_judge
-    default_arr = [*1..card_type]
-    uniq_arr = card_array.uniq
-    if uniq_arr.sort != default_arr
-      puts "unlucky"
-    else
-      card_array.each.with_index(1) do |card, index|
-        uniq_arr.delete(card)
-        uniq_arr
-        if uniq_arr.empty?
-          puts index
-          break
-        end
-      end
+  def total_create
+    self.sum_num = int_num + reverse_num
+  end
+
+  def reverse_num
+    int_num.to_s.reverse.to_i
+  end
+
+  def sum_num_reverse_num
+    sum_num.to_s.reverse.to_i
+  end
+
+  def palindrome?
+    sum_num == sum_num_reverse_num
+  end
+
+  def palindrome_create
+    until palindrome?
+      self.sum_num += sum_num_reverse_num
     end
+    p sum_num
   end
 end
+
+int_num = gets.chomp.to_i
+number_rule = NumberRule.new(int_num: int_num)
+number_rule.total_create
+number_rule.palindrome_create
