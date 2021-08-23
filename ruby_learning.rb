@@ -1704,41 +1704,115 @@
 #   p sum_num.to_i if sum_num.to_s == sum_num.to_s.reverse
 # end
 
-# クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class NumberRule
-  attr_accessor :sum_num
-  attr_reader :int_num
+# # クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class NumberRule
+#   attr_accessor :sum_num
+#   attr_reader :int_num
   
+#   def initialize(args)
+#     @int_num = args[:int_num]
+#     @sum_num = 0
+#   end
+
+#   def total_create
+#     self.sum_num = int_num + reverse_num
+#   end
+
+#   def reverse_num
+#     int_num.to_s.reverse.to_i
+#   end
+
+#   def sum_num_reverse_num
+#     sum_num.to_s.reverse.to_i
+#   end
+
+#   def palindrome?
+#     sum_num == sum_num_reverse_num
+#   end
+
+#   def palindrome_create
+#     until palindrome?
+#       self.sum_num += sum_num_reverse_num
+#     end
+#     p sum_num
+#   end
+# end
+
+# int_num = gets.chomp.to_i
+# number_rule = NumberRule.new(int_num: int_num)
+# number_rule.total_create
+# number_rule.palindrome_create
+
+# # Paiza C032:お得な買い物-----------------------
+# int_num = gets.to_i
+# merchandise = int_num.times.map { gets.split.map(&:to_i) }
+# grocery = 0
+# books = 0
+# clothing = 0
+# others = 0
+
+# merchandise_array.each do |merchan|
+#   case merchan[0]
+#   when 0
+#     grocery += merchan[1]
+#   when 1
+#     books += merchan[1]
+#   when 2
+#     clothing += merchan[1]
+#   when 3
+#     others += merchan[1]
+#   end
+# end
+
+# p (grocery / 100) * 5 + (books / 100) * 3 + (clothing / 100) * 2 + (others / 100) * 1
+
+# クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+class PointCalculation
+  GROCERY_RATIO = { id: 0, rate: 5 }
+  BOOKS_RATIO = { id: 1, rate: 3 }
+  CLOTHING_RATIO = { id: 2, rate: 2 }
+  OTHERS_RATION = { id: 3, rate: 1 }
+  attr_accessor :grocery, :books, :clothing, :others, :total_point
+  attr_reader :merchandise
+
   def initialize(args)
-    @int_num = args[:int_num]
-    @sum_num = 0
+    @grocery = 0
+    @books = 0
+    @clothing = 0
+    @others = 0
+    @total_point = 0
+    @merchandise = args[:merchandise]
   end
 
-  def total_create
-    self.sum_num = int_num + reverse_num
-  end
-
-  def reverse_num
-    int_num.to_s.reverse.to_i
-  end
-
-  def sum_num_reverse_num
-    sum_num.to_s.reverse.to_i
-  end
-
-  def palindrome?
-    sum_num == sum_num_reverse_num
-  end
-
-  def palindrome_create
-    until palindrome?
-      self.sum_num += sum_num_reverse_num
+  def classification
+    merchandise.each do |id, price|
+      case id
+      when GROCERY_RATIO[:id]
+        self.grocery += price
+      when BOOKS_RATIO[:id]
+        self.books += price
+      when CLOTHING_RATIO[:id]
+        self.clothing += price
+      when OTHERS_RATION[:id]
+        self.others += price
+      end
     end
-    p sum_num
+  end
+
+  def total_point_calc
+    (grocery / 100) * GROCERY_RATIO[:rate] + (books / 100) * BOOKS_RATIO[:rate] + (clothing / 100) * CLOTHING_RATIO[:rate] + (others / 100) * OTHERS_RATION[:rate]
+  end
+
+  def output
+    p total_point_calc
   end
 end
 
-int_num = gets.chomp.to_i
-number_rule = NumberRule.new(int_num: int_num)
-number_rule.total_create
-number_rule.palindrome_create
+int_num = gets.to_i
+merchandise = int_num.times.map { gets.split.map(&:to_i) }
+
+pointcalculation = PointCalculation.new(merchandise: merchandise)
+pointcalculation.classification
+pointcalculation.output
+
