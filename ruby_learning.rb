@@ -1766,53 +1766,97 @@
 
 # p (grocery / 100) * 5 + (books / 100) * 3 + (clothing / 100) * 2 + (others / 100) * 1
 
-# クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# # クラス化 args使用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-class PointCalculation
-  GROCERY_RATIO = { id: 0, rate: 5 }
-  BOOKS_RATIO = { id: 1, rate: 3 }
-  CLOTHING_RATIO = { id: 2, rate: 2 }
-  OTHERS_RATION = { id: 3, rate: 1 }
-  attr_accessor :grocery, :books, :clothing, :others, :total_point
-  attr_reader :merchandise
+# class PointCalculation
+#   GROCERY_RATIO = { id: 0, rate: 5 }
+#   BOOKS_RATIO = { id: 1, rate: 3 }
+#   CLOTHING_RATIO = { id: 2, rate: 2 }
+#   OTHERS_RATION = { id: 3, rate: 1 }
+#   attr_accessor :grocery, :books, :clothing, :others, :total_point
+#   attr_reader :merchandise
+
+#   def initialize(args)
+#     @grocery = 0
+#     @books = 0
+#     @clothing = 0
+#     @others = 0
+#     @total_point = 0
+#     @merchandise = args[:merchandise]
+#   end
+
+#   def classification
+#     merchandise.each do |id, price|
+#       case id
+#       when GROCERY_RATIO[:id]
+#         self.grocery += price
+#       when BOOKS_RATIO[:id]
+#         self.books += price
+#       when CLOTHING_RATIO[:id]
+#         self.clothing += price
+#       when OTHERS_RATION[:id]
+#         self.others += price
+#       end
+#     end
+#   end
+
+#   def total_point_calc
+#     (grocery / 100) * GROCERY_RATIO[:rate] + (books / 100) * BOOKS_RATIO[:rate] + (clothing / 100) * CLOTHING_RATIO[:rate] + (others / 100) * OTHERS_RATION[:rate]
+#   end
+
+#   def output
+#     p total_point_calc
+#   end
+# end
+
+# int_num = gets.to_i
+# merchandise = int_num.times.map { gets.split.map(&:to_i) }
+
+# pointcalculation = PointCalculation.new(merchandise: merchandise)
+# pointcalculation.classification
+# pointcalculation.output
+
+# Paiza C092 :工場のベルトコンベア------------------------------------------------
+# process, parts_A, parts_B = gets.split.map(&:to_i)
+
+# signals = gets.chomp.split("").map(&:to_s)
+# signal_partA = gets.chomp.split("").map(&:to_s)
+# signal_partB = gets.chomp.split("").map(&:to_s)
+
+# signals.each do |signal|
+#   signal_partA.shift if signal == signal_partA[0]
+#   signal_partB.shift if signal == signal_partB[0]
+# end
+
+# puts "#{signal_partA.count} #{signal_partB.count}"
+
+# クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+class BeltConveyor
+  attr_accessor :signal_partA, :signal_partB
+  attr_reader :signals
 
   def initialize(args)
-    @grocery = 0
-    @books = 0
-    @clothing = 0
-    @others = 0
-    @total_point = 0
-    @merchandise = args[:merchandise]
+    @signals = args[:signals]
+    @signal_partA = args[:signal_partA]
+    @signal_partB = args[:signal_partB]
   end
 
-  def classification
-    merchandise.each do |id, price|
-      case id
-      when GROCERY_RATIO[:id]
-        self.grocery += price
-      when BOOKS_RATIO[:id]
-        self.books += price
-      when CLOTHING_RATIO[:id]
-        self.clothing += price
-      when OTHERS_RATION[:id]
-        self.others += price
-      end
+  def signal_judge 
+    signals.each do |signal|
+    self.signal_partA.shift if signal == signal_partA.first
+    self.signal_partB.shift if signal == signal_partB.first
     end
-  end
 
-  def total_point_calc
-    (grocery / 100) * GROCERY_RATIO[:rate] + (books / 100) * BOOKS_RATIO[:rate] + (clothing / 100) * CLOTHING_RATIO[:rate] + (others / 100) * OTHERS_RATION[:rate]
-  end
-
-  def output
-    p total_point_calc
+    puts "#{signal_partA.count} #{signal_partB.count}"
   end
 end
 
-int_num = gets.to_i
-merchandise = int_num.times.map { gets.split.map(&:to_i) }
+process, parts_A, parts_B = gets.split.map(&:to_i)
+signals = gets.chomp.split("").map(&:to_s)
+signal_partA = gets.chomp.split("").map(&:to_s)
+signal_partB = gets.chomp.split("").map(&:to_s)
 
-pointcalculation = PointCalculation.new(merchandise: merchandise)
-pointcalculation.classification
-pointcalculation.output
-
+args = { signals: signals, signal_partA: signal_partA, signal_partB: signal_partB }
+beltconveyor = BeltConveyor.new(args)
+beltconveyor.signal_judge
