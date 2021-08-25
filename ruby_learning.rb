@@ -1830,33 +1830,90 @@
 
 # puts "#{signal_partA.count} #{signal_partB.count}"
 
-# クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# # クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-class BeltConveyor
-  attr_accessor :signal_partA, :signal_partB
-  attr_reader :signals
+# class BeltConveyor
+#   attr_accessor :signal_partA, :signal_partB
+#   attr_reader :signals
+
+#   def initialize(args)
+#     @signals = args[:signals]
+#     @signal_partA = args[:signal_partA]
+#     @signal_partB = args[:signal_partB]
+#   end
+
+#   def signal_judge 
+#     signals.each do |signal|
+#     self.signal_partA.shift if signal == signal_partA.first
+#     self.signal_partB.shift if signal == signal_partB.first
+#     end
+
+#     puts "#{signal_partA.count} #{signal_partB.count}"
+#   end
+# end
+
+# process, parts_A, parts_B = gets.split.map(&:to_i)
+# signals = gets.chomp.split("").map(&:to_s)
+# signal_partA = gets.chomp.split("").map(&:to_s)
+# signal_partB = gets.chomp.split("").map(&:to_s)
+
+# args = { signals: signals, signal_partA: signal_partA, signal_partB: signal_partB }
+# beltconveyor = BeltConveyor.new(args)
+# beltconveyor.signal_judge
+
+# # Paiza C034:先生の宿題----------------------------------------
+# int_a, plus_minas, int_b, equal_field, int_c = gets.split.map(&:to_s)
+
+# def calc_result(a, plus_minas, b, c)
+#   case
+#   when (a == "x") && (plus_minas == "+")
+#     p c.to_i - b.to_i
+#   when a == "x" && plus_minas == "-"
+#     p c.to_i + b.to_i
+#   when b == "x" && plus_minas == "+"
+#     p c.to_i - a.to_i
+#   when b == "x" && plus_minas == "-"
+#     p a.to_i - c.to_i
+#   when c == "x" && plus_minas == "+"
+#     p a.to_i + b.to_i
+#   when c == "x" && plus_minas == "-"
+#     p a.to_i - b.to_i
+#   end
+# end
+
+# calc_result(int_a, plus_minas, int_b, int_c)
+
+# # クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+class CalculationHomework
+  attr_reader :int_a, :int_b, :int_c, :plus_minas
 
   def initialize(args)
-    @signals = args[:signals]
-    @signal_partA = args[:signal_partA]
-    @signal_partB = args[:signal_partB]
+    @int_a = args[:int_a]
+    @int_b = args[:int_b]
+    @int_c = args[:int_c]
+    @plus_minas = args[:plus_minas]
   end
 
-  def signal_judge 
-    signals.each do |signal|
-    self.signal_partA.shift if signal == signal_partA.first
-    self.signal_partB.shift if signal == signal_partB.first
+  def calc_result(a, plus_minas, b, c)
+    case
+    when a == "x" && plus_minas == "+"
+      p c.to_i - b.to_i
+    when a == "x" && plus_minas == "-"
+      p c.to_i + b.to_i
+    when b == "x" && plus_minas == "+"
+      p c.to_i - a.to_i
+    when b == "x" && plus_minas == "-"
+      p a.to_i - c.to_i
+    when c == "x" && plus_minas == "+"
+      p a.to_i + b.to_i
+    when c == "x" && plus_minas == "-"
+      p a.to_i - b.to_i
     end
-
-    puts "#{signal_partA.count} #{signal_partB.count}"
   end
 end
 
-process, parts_A, parts_B = gets.split.map(&:to_i)
-signals = gets.chomp.split("").map(&:to_s)
-signal_partA = gets.chomp.split("").map(&:to_s)
-signal_partB = gets.chomp.split("").map(&:to_s)
+int_a, plus_minas, int_b, equal_field, int_c = gets.split.map(&:to_s)
+args = { int_a: int_a, int_b: int_b, int_c: int_c, plus_minas: plus_minas }
+calclationhomeword = CalculationHomework.new(args)
+calclationhomeword.calc_result(int_a, plus_minas, int_b, int_c)
 
-args = { signals: signals, signal_partA: signal_partA, signal_partB: signal_partB }
-beltconveyor = BeltConveyor.new(args)
-beltconveyor.signal_judge
