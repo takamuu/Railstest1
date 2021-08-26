@@ -1884,36 +1884,94 @@
 # calc_result(int_a, plus_minas, int_b, int_c)
 
 # # クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class CalculationHomework
-  attr_reader :int_a, :int_b, :int_c, :plus_minas
+# class CalculationHomework
+#   attr_reader :int_a, :int_b, :int_c, :plus_minas
+
+#   def initialize(args)
+#     @int_a = args[:int_a]
+#     @int_b = args[:int_b]
+#     @int_c = args[:int_c]
+#     @plus_minas = args[:plus_minas]
+#   end
+
+#   def calc_result(a, plus_minas, b, c)
+#     case
+#     when a == "x" && plus_minas == "+"
+#       p c.to_i - b.to_i
+#     when a == "x" && plus_minas == "-"
+#       p c.to_i + b.to_i
+#     when b == "x" && plus_minas == "+"
+#       p c.to_i - a.to_i
+#     when b == "x" && plus_minas == "-"
+#       p a.to_i - c.to_i
+#     when c == "x" && plus_minas == "+"
+#       p a.to_i + b.to_i
+#     when c == "x" && plus_minas == "-"
+#       p a.to_i - b.to_i
+#     end
+#   end
+# end
+
+# int_a, plus_minas, int_b, equal_field, int_c = gets.split.map(&:to_s)
+# args = { int_a: int_a, int_b: int_b, int_c: int_c, plus_minas: plus_minas }
+# calclationhomeword = CalculationHomework.new(args)
+# calclationhomeword.calc_result(int_a, plus_minas, int_b, int_c)
+
+# # Paiza C071:直角三角形------------------------------------
+
+# int_M, int_N = gets.split.map(&:to_i)
+
+# int_arr = []
+
+# [*1..(int_M - 1)].each do |int_m|
+#   [*1..(int_N - 1)].each do |int_n|
+#     x = ((int_m) ** 2) + ((int_n) ** 2)
+#     if x ** (1 / 2.0) - (x ** (1 / 2.0)).to_i == 0
+#       int_arr << x ** (1 / 2.0)
+#     end
+#   end
+# end
+# p int_arr.count
+
+# クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+class RightTriangles
+  attr_accessor :triangle_count
+  attr_reader :first_num, :second_num
 
   def initialize(args)
-    @int_a = args[:int_a]
-    @int_b = args[:int_b]
-    @int_c = args[:int_c]
-    @plus_minas = args[:plus_minas]
+    @first_num = args[:first_num]
+    @second_num = args[:second_num]
+    @triangle_count = 0
   end
 
-  def calc_result(a, plus_minas, b, c)
-    case
-    when a == "x" && plus_minas == "+"
-      p c.to_i - b.to_i
-    when a == "x" && plus_minas == "-"
-      p c.to_i + b.to_i
-    when b == "x" && plus_minas == "+"
-      p c.to_i - a.to_i
-    when b == "x" && plus_minas == "-"
-      p a.to_i - c.to_i
-    when c == "x" && plus_minas == "+"
-      p a.to_i + b.to_i
-    when c == "x" && plus_minas == "-"
-      p a.to_i - b.to_i
+  def hypotenuse_judgement
+    p first_numbers = create_numbers(first_num)
+    p second_numbers = create_numbers(second_num)
+
+    first_numbers.product(second_numbers) do |x, y|
+      self.triangle_count += 1 if hypotenuse_correct?(x, y)
     end
+  end
+
+  def create_numbers(num)
+    [*1..(num - 1)]
+  end
+
+  def hypotenuse_correct?(first_side, second_side)
+    p x = (first_side ** 2) + (second_side ** 2)
+    x ** (1 / 2.0) - (x ** (1 / 2.0)).to_i == 0
+  end
+
+  def output_hypotenuse_count
+    puts triangle_count
   end
 end
 
-int_a, plus_minas, int_b, equal_field, int_c = gets.split.map(&:to_s)
-args = { int_a: int_a, int_b: int_b, int_c: int_c, plus_minas: plus_minas }
-calclationhomeword = CalculationHomework.new(args)
-calclationhomeword.calc_result(int_a, plus_minas, int_b, int_c)
-
+first_num, second_num = gets.split.map(&:to_i)
+args = {
+  first_num: first_num,
+  second_num: second_num,
+}
+right_triangles = RightTriangles.new(args)
+right_triangles.hypotenuse_judgement
+right_triangles.output_hypotenuse_count
