@@ -1933,45 +1933,78 @@
 # end
 # p int_arr.count
 
-# クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class RightTriangles
-  attr_accessor :triangle_count
-  attr_reader :first_num, :second_num
+# # クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class RightTriangles
+#   attr_accessor :triangle_count
+#   attr_reader :first_num, :second_num
+
+#   def initialize(args)
+#     @first_num = args[:first_num]
+#     @second_num = args[:second_num]
+#     @triangle_count = 0
+#   end
+
+#   def hypotenuse_judgement
+#     p first_numbers = create_numbers(first_num)
+#     p second_numbers = create_numbers(second_num)
+
+#     first_numbers.product(second_numbers) do |x, y|
+#       self.triangle_count += 1 if hypotenuse_correct?(x, y)
+#     end
+#   end
+
+#   def create_numbers(num)
+#     [*1..(num - 1)]
+#   end
+
+#   def hypotenuse_correct?(first_side, second_side)
+#     p x = (first_side ** 2) + (second_side ** 2)
+#     x ** (1 / 2.0) - (x ** (1 / 2.0)).to_i == 0
+#   end
+
+#   def output_hypotenuse_count
+#     puts triangle_count
+#   end
+# end
+
+# first_num, second_num = gets.split.map(&:to_i)
+# args = {
+#   first_num: first_num,
+#   second_num: second_num,
+# }
+# right_triangles = RightTriangles.new(args)
+# right_triangles.hypotenuse_judgement
+# right_triangles.output_hypotenuse_count
+
+# Paiza C091:みかんの仕分け-----------------------------
+class OrangeSort
+  attr_reader :box_weight, :num_times
 
   def initialize(args)
-    @first_num = args[:first_num]
-    @second_num = args[:second_num]
-    @triangle_count = 0
+    @box_weight = args[:box_weight]
+    @num_times = args[:num_times]
   end
 
-  def hypotenuse_judgement
-    p first_numbers = create_numbers(first_num)
-    p second_numbers = create_numbers(second_num)
+  def sorting(array)
+    array.each { |orange_weight| box_weight_output(orange_weight) }
+  end
 
-    first_numbers.product(second_numbers) do |x, y|
-      self.triangle_count += 1 if hypotenuse_correct?(x, y)
+  def box_weight_output(orange_weight)
+    if near_box(orange_weight) == 0
+      p box_weight
+    else
+      p near_box(orange_weight)
     end
   end
 
-  def create_numbers(num)
-    [*1..(num - 1)]
-  end
-
-  def hypotenuse_correct?(first_side, second_side)
-    p x = (first_side ** 2) + (second_side ** 2)
-    x ** (1 / 2.0) - (x ** (1 / 2.0)).to_i == 0
-  end
-
-  def output_hypotenuse_count
-    puts triangle_count
+  def near_box(orange_weight)
+    (orange_weight / box_weight).round * box_weight
   end
 end
 
-first_num, second_num = gets.split.map(&:to_i)
-args = {
-  first_num: first_num,
-  second_num: second_num,
-}
-right_triangles = RightTriangles.new(args)
-right_triangles.hypotenuse_judgement
-right_triangles.output_hypotenuse_count
+box_weight, num_times = gets.split.map(&:to_i)
+oranges_weight_arr = num_times.times.map { gets.to_f }
+
+args = { box_weight: box_weight, num_times: num_times }
+orangesort = OrangeSort.new(args)
+orangesort.sorting(oranges_weight_arr)
