@@ -1976,35 +1976,97 @@
 # right_triangles.hypotenuse_judgement
 # right_triangles.output_hypotenuse_count
 
-# Paiza C091:みかんの仕分け-----------------------------
-class OrangeSort
-  attr_reader :box_weight, :num_times
+# # Paiza C091:みかんの仕分け-----------------------------
+# class OrangeSort
+#   attr_reader :box_weight, :num_times
+
+#   def initialize(args)
+#     @box_weight = args[:box_weight]
+#     @num_times = args[:num_times]
+#   end
+
+#   def sorting(array)
+#     array.each { |orange_weight| box_weight_output(orange_weight) }
+#   end
+
+#   def box_weight_output(orange_weight)
+#     if near_box(orange_weight) == 0
+#       p box_weight
+#     else
+#       p near_box(orange_weight)
+#     end
+#   end
+
+#   def near_box(orange_weight)
+#     (orange_weight / box_weight).round * box_weight
+#   end
+# end
+
+# box_weight, num_times = gets.split.map(&:to_i)
+# oranges_weight_arr = num_times.times.map { gets.to_f }
+
+# args = { box_weight: box_weight, num_times: num_times }
+# orangesort = OrangeSort.new(args)
+# orangesort.sorting(oranges_weight_arr)
+
+# # Paiza C094:国民の税金---------------------------------------------------
+# times_num = gets.to_i
+
+# national_income = times_num.times.map { gets.to_i }
+
+# total_tax = 0
+
+# national_income.each do |income|
+#   case income
+#   when 0..100000
+#     next
+#   when 100001..750000
+#     total_tax += ((income - 100000) * 0.1).floor
+#   when 750001..1500000
+#     total_tax += 65000 + ((income - 750000) * 0.2).floor
+#   else
+#     total_tax += 215000 + ((income - 1500000) * 0.4).floor
+#   end
+# end
+# p total_tax
+
+# クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+class NationalIncome
+  attr_accessor :total_tax
+  attr_reader :national_income_array
 
   def initialize(args)
-    @box_weight = args[:box_weight]
-    @num_times = args[:num_times]
+    @total_tax = 0
+    @national_income_array = args[:national_income_array]
   end
 
-  def sorting(array)
-    array.each { |orange_weight| box_weight_output(orange_weight) }
+  def decimal_truncation(tax)
+    tax.floor
   end
 
-  def box_weight_output(orange_weight)
-    if near_box(orange_weight) == 0
-      p box_weight
+  def tax_calculation(income)
+    case income
+    when 0..100000
+      self.total_tax += 0
+    when 100001..750000
+      self.total_tax += decimal_truncation((income - 100000) * 0.1)
+    when 750001..1500000
+      self.total_tax += 65000 + decimal_truncation((income - 750000) * 0.2)
     else
-      p near_box(orange_weight)
+      self.total_tax += 215000 + decimal_truncation((income - 1500000) * 0.4)
     end
   end
 
-  def near_box(orange_weight)
-    (orange_weight / box_weight).round * box_weight
+  def total_tax_output
+    national_income_array.each { |income| tax_calculation(income) }
+    p total_tax
   end
 end
 
-box_weight, num_times = gets.split.map(&:to_i)
-oranges_weight_arr = num_times.times.map { gets.to_f }
 
-args = { box_weight: box_weight, num_times: num_times }
-orangesort = OrangeSort.new(args)
-orangesort.sorting(oranges_weight_arr)
+
+times_num = gets.to_i
+national_income_array = times_num.times.map { gets.to_i }
+
+national_income = NationalIncome.new(national_income_array: national_income_array)
+national_income.total_tax_output
