@@ -2030,43 +2030,70 @@
 # end
 # p total_tax
 
-# クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class NationalIncome
-  attr_accessor :total_tax
-  attr_reader :national_income_array
+# # クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class NationalIncome
+#   attr_accessor :total_tax
+#   attr_reader :national_income_array
 
-  def initialize(args)
-    @total_tax = 0
-    @national_income_array = args[:national_income_array]
-  end
+#   def initialize(args)
+#     @total_tax = 0
+#     @national_income_array = args[:national_income_array]
+#   end
 
-  def decimal_truncation(tax)
-    tax.floor
-  end
+#   def decimal_truncation(tax)
+#     tax.floor
+#   end
 
-  def tax_calculation(income)
-    case income
-    when 0..100000
-      self.total_tax += 0
-    when 100001..750000
-      self.total_tax += decimal_truncation((income - 100000) * 0.1)
-    when 750001..1500000
-      self.total_tax += 65000 + decimal_truncation((income - 750000) * 0.2)
-    else
-      self.total_tax += 215000 + decimal_truncation((income - 1500000) * 0.4)
-    end
-  end
+#   def tax_calculation(income)
+#     case income
+#     when 0..100000
+#       self.total_tax += 0
+#     when 100001..750000
+#       self.total_tax += decimal_truncation((income - 100000) * 0.1)
+#     when 750001..1500000
+#       self.total_tax += 65000 + decimal_truncation((income - 750000) * 0.2)
+#     else
+#       self.total_tax += 215000 + decimal_truncation((income - 1500000) * 0.4)
+#     end
+#   end
 
-  def total_tax_output
-    national_income_array.each { |income| tax_calculation(income) }
-    p total_tax
-  end
+#   def total_tax_output
+#     national_income_array.each { |income| tax_calculation(income) }
+#     p total_tax
+#   end
+# end
+
+
+
+# times_num = gets.to_i
+# national_income_array = times_num.times.map { gets.to_i }
+
+# national_income = NationalIncome.new(national_income_array: national_income_array)
+# national_income.total_tax_output
+
+# Paiza C054:【ぱいじょ！コラボ問題】スピード違反の取り締まり---------------------------------------------------
+times_num, @speed_limit = gets.split.map(&:to_i)
+
+time_position_array = times_num.times.map { gets.split.map(&:to_i) }
+
+def speed_over?(result)
+  @speed_limit <= result.max ? (puts "YES") : (puts "NO")
 end
 
+previous_point = []
+later_point = []
+result = []
+time_position_array.each { |element|
+  previous_point = element if previous_point.empty?
+  later_point = element
+  position_deff = later_point.first - previous_point.first
+  distance_diff = later_point.last - previous_point.last
+  begin
+    result << distance_diff / position_deff
+  rescue => e
+  end
 
-
-times_num = gets.to_i
-national_income_array = times_num.times.map { gets.to_i }
-
-national_income = NationalIncome.new(national_income_array: national_income_array)
-national_income.total_tax_output
+  previous_point = later_point
+  result
+}
+speed_over?(result)
