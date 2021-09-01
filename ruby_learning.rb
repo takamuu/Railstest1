@@ -2071,29 +2071,85 @@
 # national_income = NationalIncome.new(national_income_array: national_income_array)
 # national_income.total_tax_output
 
-# Paiza C054:【ぱいじょ！コラボ問題】スピード違反の取り締まり---------------------------------------------------
-times_num, @speed_limit = gets.split.map(&:to_i)
+# # Paiza C054:【ぱいじょ！コラボ問題】スピード違反の取り締まり---------------------------------------------------
+# times_num, @speed_limit = gets.split.map(&:to_i)
 
-time_position_array = times_num.times.map { gets.split.map(&:to_i) }
+# time_position_array = times_num.times.map { gets.split.map(&:to_i) }
 
-def speed_over?(result)
-  @speed_limit <= result.max ? (puts "YES") : (puts "NO")
-end
+# def speed_over?(result)
+#   @speed_limit <= result.max ? (puts "YES") : (puts "NO")
+# end
 
-previous_point = []
-later_point = []
-result = []
-time_position_array.each { |element|
-  previous_point = element if previous_point.empty?
-  later_point = element
-  position_deff = later_point.first - previous_point.first
-  distance_diff = later_point.last - previous_point.last
-  begin
-    result << distance_diff / position_deff
-  rescue => e
+# previous_point = []
+# later_point = []
+# result = []
+# time_position_array.each { |element|
+#   previous_point = element if previous_point.empty?
+#   later_point = element
+#   position_deff = later_point.first - previous_point.first
+#   distance_diff = later_point.last - previous_point.last
+#   begin
+#     result << distance_diff / position_deff
+#   rescue => e
+#   end
+
+#   previous_point = later_point
+#   result
+# }
+# speed_over?(result)
+
+# Paiza C044:手の組み合わせ---------------------------------------------------
+# num_people = gets.to_i
+
+# game_array = num_people.times.map { gets.chomp.to_s }
+
+# case
+# when game_array.uniq.sort == ["paper", "rock"]
+#   puts "paper"
+# when game_array.uniq.sort == ["paper", "scissors"]
+#   puts "scissors"
+# when game_array.uniq.sort == ["rock", "scissors"]
+#   puts "rock"
+# when game_array.uniq.sort == ["paper", "rock", "scissors"]
+#   puts "draw"
+# when game_array.uniq.count(1)
+#   puts "draw"
+# end
+
+# クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+class RockPaperScissors
+  attr_reader :game_array
+
+  def initialize(args)
+    @game_array = args[:game_array]
   end
 
-  previous_point = later_point
-  result
-}
-speed_over?(result)
+  def remove_duplicates
+    game_array.uniq.sort
+  end
+
+  def count
+    game_array.uniq.count(1)
+  end
+
+  def gamejudge
+    case
+    when remove_duplicates == ["paper", "rock"]
+      puts "paper"
+    when remove_duplicates == ["paper", "scissors"]
+      puts "scissors"
+    when remove_duplicates == ["rock", "scissors"]
+      puts "rock"
+    when remove_duplicates == ["paper", "rock", "scissors"]
+      puts "draw"
+    when count
+      puts "draw"
+    end
+  end
+end
+
+num_people = gets.to_i
+game_array = num_people.times.map { gets.chomp.to_s }
+rockpaperscissors = RockPaperScissors.new(game_array: game_array)
+rockpaperscissors.gamejudge
+
