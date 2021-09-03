@@ -2098,7 +2098,7 @@
 # }
 # speed_over?(result)
 
-# Paiza C044:手の組み合わせ---------------------------------------------------
+# # Paiza C044:手の組み合わせ---------------------------------------------------
 # num_people = gets.to_i
 
 # game_array = num_people.times.map { gets.chomp.to_s }
@@ -2116,40 +2116,64 @@
 #   puts "draw"
 # end
 
-# クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class RockPaperScissors
-  attr_reader :game_array
+# # クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class RockPaperScissors
+#   attr_reader :game_array
 
-  def initialize(args)
-    @game_array = args[:game_array]
-  end
+#   def initialize(args)
+#     @game_array = args[:game_array]
+#   end
 
-  def remove_duplicates
-    game_array.uniq.sort
-  end
+#   def remove_duplicates
+#     game_array.uniq.sort
+#   end
 
-  def count
-    game_array.uniq.count(1)
-  end
+#   def count
+#     game_array.uniq.count(1)
+#   end
 
-  def gamejudge
-    case
-    when remove_duplicates == ["paper", "rock"]
-      puts "paper"
-    when remove_duplicates == ["paper", "scissors"]
-      puts "scissors"
-    when remove_duplicates == ["rock", "scissors"]
-      puts "rock"
-    when remove_duplicates == ["paper", "rock", "scissors"]
-      puts "draw"
-    when count
-      puts "draw"
-    end
+#   def gamejudge
+#     case
+#     when remove_duplicates == ["paper", "rock"]
+#       puts "paper"
+#     when remove_duplicates == ["paper", "scissors"]
+#       puts "scissors"
+#     when remove_duplicates == ["rock", "scissors"]
+#       puts "rock"
+#     when remove_duplicates == ["paper", "rock", "scissors"]
+#       puts "draw"
+#     when count
+#       puts "draw"
+#     end
+#   end
+# end
+
+# num_people = gets.to_i
+# game_array = num_people.times.map { gets.chomp.to_s }
+# rockpaperscissors = RockPaperScissors.new(game_array: game_array)
+# rockpaperscissors.gamejudge
+
+# paiza C085:壊れかけのキーボード-----------------------------------------------------
+durability = gets.split.map(&:to_i)
+# p durability
+input_char = gets.chomp.split("").map(&:to_s)
+# p input_char
+alphabets = [*"a".."z"]
+numbers = [*"0".."25"]
+table = alphabets.zip(numbers).to_h
+# p table[]
+
+box = []
+# p replace.chars
+input_char.each do |char|
+  index = char.gsub(/[a-z]/, table).to_i
+  # p durability[index]
+  if durability[index] > 0
+    box << alphabets[index]
+    durability[index] -= 1
+    #  p durability
+  else
+    next
   end
 end
-
-num_people = gets.to_i
-game_array = num_people.times.map { gets.chomp.to_s }
-rockpaperscissors = RockPaperScissors.new(game_array: game_array)
-rockpaperscissors.gamejudge
-
+puts box.join
