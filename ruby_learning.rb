@@ -2154,26 +2154,65 @@
 # rockpaperscissors.gamejudge
 
 # paiza C085:壊れかけのキーボード-----------------------------------------------------
-durability = gets.split.map(&:to_i)
-# p durability
-input_char = gets.chomp.split("").map(&:to_s)
-# p input_char
-alphabets = [*"a".."z"]
-numbers = [*"0".."25"]
-table = alphabets.zip(numbers).to_h
-# p table[]
+# durability = gets.split.map(&:to_i)
+# # p durability
+# input_char = gets.chomp.split("").map(&:to_s)
+# # p input_char
+# alphabets = [*"a".."z"]
+# numbers = [*"0".."25"]
+# table = alphabets.zip(numbers).to_h
+# # p table[]
 
-box = []
-# p replace.chars
-input_char.each do |char|
-  index = char.gsub(/[a-z]/, table).to_i
-  # p durability[index]
-  if durability[index] > 0
-    box << alphabets[index]
-    durability[index] -= 1
-    #  p durability
-  else
-    next
+# box = []
+# # p replace.chars
+# input_char.each do |char|
+#   index = char.gsub(/[a-z]/, table).to_i
+#   # p durability[index]
+#   if durability[index] > 0
+#     box << alphabets[index]
+#     durability[index] -= 1
+#     #  p durability
+#   else
+#     next
+#   end
+# end
+# puts box.join
+
+# paiza C058:模様そろえ-----------------------------------------------------
+align_direction = []
+initial_state = []
+num_sides, align_direction, initial_state = gets.split.map(&:to_s)
+# p num_sides, align_direction, initial_state
+
+num_times = 0
+until align_direction == initial_state
+  ini_str = initial_state[0]
+  initial_state.slice!(0)
+  initial_state.concat(ini_str)
+  num_times += 1
+end
+p num_times
+
+# クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+class AlignPattern
+  attr_accessor :num_times
+  attr_reader :align_direction, :initial_state
+
+  def initialize(args)
+    @num_times = 0
+    @align_direction = args[:align_direction]
+    @initial_state = args[:initial_state]
+  end
+
+  def 
+    until align_direction == initial_state
+    ini_str = initial_state[0]
+    initial_state.slice!(0)
+    initial_state.concat(ini_str)
+    num_times += 1
+  end
+  p num_times
+
   end
 end
-puts box.join
