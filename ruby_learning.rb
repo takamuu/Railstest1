@@ -2216,3 +2216,30 @@ class AlignPattern
 
   end
 end
+
+# B019:グレースケール画像の縮小----------------------------------------------------
+image_size, shrink = gets.split.map(&:to_i)
+
+all_pixel_num = image_size.times.map { gets.split.map(&:to_i) }
+
+
+initial_index = 0
+divide_index = image_size / shrink
+vertical_divide_array = []
+horizon_divide_array = []
+answer = []
+divide_index.times do
+    all_pixel_num.each.with_index(1) do |pixel_num, index|
+        if index % shrink != 0
+            vertical_divide_array << pixel_num[initial_index..divide_index]
+        else
+            vertical_divide_array << pixel_num[initial_index..divide_index]
+            p answer << vertical_divide_array.flatten.sum / shrink**2
+            vertical_divide_array = []
+        end
+    end
+    p initial_index += shrink
+    p divide_index += shrink
+end
+
+p answer.each_slice(image_size/shrink).to_a
