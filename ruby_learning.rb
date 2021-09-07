@@ -2217,7 +2217,7 @@ class AlignPattern
   end
 end
 
-# B019:グレースケール画像の縮小----------------------------------------------------
+# B019:グレースケール画像の縮小-NG---------------------------------------------------
 image_size, shrink = gets.split.map(&:to_i)
 
 all_pixel_num = image_size.times.map { gets.split.map(&:to_i) }
@@ -2243,3 +2243,37 @@ divide_index.times do
 end
 
 p answer.each_slice(image_size/shrink).to_a
+
+# B019:グレースケール画像の縮小-OK---------------------------------------------------
+image_size, shrink = gets.split.map(&:to_i)
+# image_size, shrink
+all_pixel_num = image_size.times.map { gets.split.map(&:to_i) }
+# all_pixel_num
+
+position_arr = [*0..image_size-1].each_slice(shrink).to_a
+
+initial_index = 0
+divide_index = image_size / shrink
+vertical_divide_array = []
+horizon_divide_array = []
+answer = []
+
+position_arr.each do |position|
+    all_pixel_num.each_with_index do |pixel_num, pixel_index|
+    pixel_num
+        if (pixel_index + 1) % shrink == 0
+            # p  pixel_num[position.first..position.last]
+           vertical_divide_array << pixel_num[position.first..position.last]
+             answer << vertical_divide_array.flatten.sum / shrink**2
+            vertical_divide_array = []
+        else
+            
+            vertical_divide_array << pixel_num[position.first..position.last]
+        end
+    end
+end
+
+ final_answer = answer.each_slice(image_size/shrink).to_a.transpose
+final_answer.each do |final|
+    puts final.join(' ')
+end
