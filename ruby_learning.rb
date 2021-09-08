@@ -2178,102 +2178,181 @@
 # end
 # puts box.join
 
-# paiza C058:模様そろえ-----------------------------------------------------
-align_direction = []
-initial_state = []
-num_sides, align_direction, initial_state = gets.split.map(&:to_s)
-# p num_sides, align_direction, initial_state
+# # paiza C058:模様そろえ-----------------------------------------------------
+# align_direction = []
+# initial_state = []
+# num_sides, align_direction, initial_state = gets.split.map(&:to_s)
+# # p num_sides, align_direction, initial_state
 
-num_times = 0
-until align_direction == initial_state
-  ini_str = initial_state[0]
-  initial_state.slice!(0)
-  initial_state.concat(ini_str)
-  num_times += 1
-end
-p num_times
+# num_times = 0
+# until align_direction == initial_state
+#   ini_str = initial_state[0]
+#   initial_state.slice!(0)
+#   initial_state.concat(ini_str)
+#   num_times += 1
+# end
+# p num_times
 
-# クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# # クラス化 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-class AlignPattern
-  attr_accessor :num_times
-  attr_reader :align_direction, :initial_state
+# class AlignPattern
+#   attr_accessor :num_times
+#   attr_reader :align_direction, :initial_state
 
-  def initialize(args)
-    @num_times = 0
-    @align_direction = args[:align_direction]
-    @initial_state = args[:initial_state]
-  end
+#   def initialize(args)
+#     @num_times = 0
+#     @align_direction = args[:align_direction]
+#     @initial_state = args[:initial_state]
+#   end
 
-  def 
-    until align_direction == initial_state
-    ini_str = initial_state[0]
-    initial_state.slice!(0)
-    initial_state.concat(ini_str)
-    num_times += 1
-  end
-  p num_times
+#   def 
+#     until align_direction == initial_state
+#     ini_str = initial_state[0]
+#     initial_state.slice!(0)
+#     initial_state.concat(ini_str)
+#     num_times += 1
+#   end
+#   p num_times
 
-  end
-end
+#   end
+# end
 
-# B019:グレースケール画像の縮小-NG---------------------------------------------------
-image_size, shrink = gets.split.map(&:to_i)
+# # B019:グレースケール画像の縮小-NG---------------------------------------------------
+# image_size, shrink = gets.split.map(&:to_i)
 
-all_pixel_num = image_size.times.map { gets.split.map(&:to_i) }
+# all_pixel_num = image_size.times.map { gets.split.map(&:to_i) }
 
 
-initial_index = 0
-divide_index = image_size / shrink
-vertical_divide_array = []
-horizon_divide_array = []
-answer = []
-divide_index.times do
-    all_pixel_num.each.with_index(1) do |pixel_num, index|
-        if index % shrink != 0
-            vertical_divide_array << pixel_num[initial_index..divide_index]
-        else
-            vertical_divide_array << pixel_num[initial_index..divide_index]
-            p answer << vertical_divide_array.flatten.sum / shrink**2
-            vertical_divide_array = []
-        end
-    end
-    p initial_index += shrink
-    p divide_index += shrink
-end
+# initial_index = 0
+# divide_index = image_size / shrink
+# vertical_divide_array = []
+# horizon_divide_array = []
+# answer = []
+# divide_index.times do
+#     all_pixel_num.each.with_index(1) do |pixel_num, index|
+#         if index % shrink != 0
+#             vertical_divide_array << pixel_num[initial_index..divide_index]
+#         else
+#             vertical_divide_array << pixel_num[initial_index..divide_index]
+#             p answer << vertical_divide_array.flatten.sum / shrink**2
+#             vertical_divide_array = []
+#         end
+#     end
+#     p initial_index += shrink
+#     p divide_index += shrink
+# end
 
-p answer.each_slice(image_size/shrink).to_a
+# p answer.each_slice(image_size/shrink).to_a
 
-# B019:グレースケール画像の縮小-OK---------------------------------------------------
-image_size, shrink = gets.split.map(&:to_i)
-# image_size, shrink
-all_pixel_num = image_size.times.map { gets.split.map(&:to_i) }
-# all_pixel_num
+# # B019:グレースケール画像の縮小-OK---------------------------------------------------
+# image_size, shrink = gets.split.map(&:to_i)
+# # image_size, shrink
+# all_pixel_num = image_size.times.map { gets.split.map(&:to_i) }
+# # all_pixel_num
 
-position_arr = [*0..image_size-1].each_slice(shrink).to_a
+# position_arr = [*0..image_size-1].each_slice(shrink).to_a
 
-initial_index = 0
-divide_index = image_size / shrink
-vertical_divide_array = []
-horizon_divide_array = []
-answer = []
+# initial_index = 0
+# divide_index = image_size / shrink
+# vertical_divide_array = []
+# horizon_divide_array = []
+# answer = []
 
-position_arr.each do |position|
-    all_pixel_num.each_with_index do |pixel_num, pixel_index|
-    pixel_num
-        if (pixel_index + 1) % shrink == 0
-            # p  pixel_num[position.first..position.last]
-           vertical_divide_array << pixel_num[position.first..position.last]
-             answer << vertical_divide_array.flatten.sum / shrink**2
-            vertical_divide_array = []
-        else
+# position_arr.each do |position|
+#     all_pixel_num.each_with_index do |pixel_num, pixel_index|
+#     pixel_num
+#         if (pixel_index + 1) % shrink == 0
+#             # p  pixel_num[position.first..position.last]
+#            vertical_divide_array << pixel_num[position.first..position.last]
+#              answer << vertical_divide_array.flatten.sum / shrink**2
+#             vertical_divide_array = []
+#         else
             
-            vertical_divide_array << pixel_num[position.first..position.last]
-        end
+#             vertical_divide_array << pixel_num[position.first..position.last]
+#         end
+#     end
+# end
+
+#  final_answer = answer.each_slice(image_size/shrink).to_a.transpose
+# final_answer.each do |final|
+#     puts final.join(' ')
+# end
+
+# # paiza C072:モンスターの進化-------------------------------------------
+# attack, defence, agility = gets.split.map(&:to_i)
+# # p attack, defence, agility
+
+# num_times = gets.to_i
+
+# answer_arr = []
+# num_times.times do
+#   evolution_values = gets.split.map(&:to_s)
+#   att_range1 = evolution_values[1].to_i
+#   att_range2 = evolution_values[2].to_i
+#   def_range1 = evolution_values[3].to_i
+#   def_range2 = evolution_values[4].to_i
+#   agi_range1 = evolution_values[5].to_i
+#   agi_range2 = evolution_values[6].to_i
+#   if attack.between?(att_range1, att_range2) && defence.between?(def_range1, def_range2) && agility.between?(agi_range1, agi_range2)
+#     answer_arr << evolution_values[0]
+#   end
+# end
+
+# puts "no evolution" if answer_arr.empty?
+# puts answer_arr
+
+# クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+class MonsterEvolution
+  attr_accessor :att_range_start, :att_range_end, :def_range_start, :def_range_end, 
+                :agi_range_start, :agi_range_end, :answer_arr, :evolution_values
+  attr_reader :attack, :defence, :agility, :num_times
+  
+  def initialize(args)
+    @att_range_start = args[:att_range_start]
+    @att_range_end   = args[:att_range_end]
+    @def_range_start = args[:def_range_start]
+    @def_range_end   = args[:def_range_end]
+    @agi_range_start = args[:agi_range_start]
+    @agi_range_end   = args[:agi_range_end]
+    @attack = args[:attack]
+    @defence = args[:defence]
+    @agility = args[:agility]
+    @evolution_values = args[:evolution_values]
+    @answer_arr = args[:answer_arr]
+    @num_times = args[:num_times]
+  end
+
+  def substitution
+    num_times.times do
+      evolution_values = gets.split.map(&:to_s)
+      att_range_start = evolution_values[1].to_i
+      att_range_end   = evolution_values[2].to_i
+      def_range_start = evolution_values[3].to_i
+      def_range_end   = evolution_values[4].to_i
+      agi_range_start = evolution_values[5].to_i
+      agi_range_end   = evolution_values[6].to_i
     end
+  end
+
+  def evolutionjudge
+    if attack.between?(att_range_start, att_range_end) && defence.between?(def_range_start, def_range_end) && agility.between?(agi_range_start, agi_range_end)
+      answer_arr << evolution_values[0]
+    end
+  end
+
+  def output
+    puts "no evolution" if answer_arr.empty?
+    puts answer_arr
+  end
 end
 
- final_answer = answer.each_slice(image_size/shrink).to_a.transpose
-final_answer.each do |final|
-    puts final.join(' ')
-end
+attack, defence, agility = gets.split.map(&:to_i)
+num_times = gets.to_i
+args = { attack: attack, defence: defence, agility: agility, num_times: num_times }
+monsterevolution = MonsterEvolution.new(args)
+monsterevolution.substitution
+monsterevolution.evolutionjudge
+monsterevolution.output
+
+# att_range_start: att_range_start, att_range_end: att_range_end, def_range_start: def_range_start, def_range_end: def_range_end, 
+        #  agi_range_start: agi_range_start, agi_range_end: agi_range_end, answer_arr: answer_arr, evolution_values: evolution_values,
