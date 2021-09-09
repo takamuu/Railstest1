@@ -2303,40 +2303,43 @@
 
 # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 class MonsterEvolution
-  attr_accessor :att_range_start, :att_range_end, :def_range_start, :def_range_end, 
-                :agi_range_start, :agi_range_end, :answer_arr, :evolution_values
+  attr_accessor :att_range_start, :att_range_end,
+                :def_range_start, :def_range_end,
+                :agi_range_start, :agi_range_end,
+                :answer_arr, :evolution_values
   attr_reader :attack, :defence, :agility, :num_times
-  
+
   def initialize(args)
     @att_range_start = args[:att_range_start]
-    @att_range_end   = args[:att_range_end]
+    @att_range_end = args[:att_range_end]
     @def_range_start = args[:def_range_start]
-    @def_range_end   = args[:def_range_end]
+    @def_range_end = args[:def_range_end]
     @agi_range_start = args[:agi_range_start]
-    @agi_range_end   = args[:agi_range_end]
+    @agi_range_end = args[:agi_range_end]
     @attack = args[:attack]
     @defence = args[:defence]
     @agility = args[:agility]
     @evolution_values = args[:evolution_values]
-    @answer_arr = args[:answer_arr]
+    @answer_arr = []
     @num_times = args[:num_times]
   end
 
   def substitution
     num_times.times do
-      evolution_values = gets.split.map(&:to_s)
-      att_range_start = evolution_values[1].to_i
-      att_range_end   = evolution_values[2].to_i
-      def_range_start = evolution_values[3].to_i
-      def_range_end   = evolution_values[4].to_i
-      agi_range_start = evolution_values[5].to_i
-      agi_range_end   = evolution_values[6].to_i
+      self.evolution_values = gets.split.map(&:to_s)
+      self.att_range_start = evolution_values[1].to_i
+      self.att_range_end = evolution_values[2].to_i
+      self.def_range_start = evolution_values[3].to_i
+      self.def_range_end = evolution_values[4].to_i
+      self.agi_range_start = evolution_values[5].to_i
+      self.agi_range_end = evolution_values[6].to_i
+      evolutionjudge
     end
   end
 
   def evolutionjudge
     if attack.between?(att_range_start, att_range_end) && defence.between?(def_range_start, def_range_end) && agility.between?(agi_range_start, agi_range_end)
-      answer_arr << evolution_values[0]
+      self.answer_arr << evolution_values[0]
     end
   end
 
@@ -2351,8 +2354,38 @@ num_times = gets.to_i
 args = { attack: attack, defence: defence, agility: agility, num_times: num_times }
 monsterevolution = MonsterEvolution.new(args)
 monsterevolution.substitution
-monsterevolution.evolutionjudge
 monsterevolution.output
 
-# att_range_start: att_range_start, att_range_end: att_range_end, def_range_start: def_range_start, def_range_end: def_range_end, 
-        #  agi_range_start: agi_range_start, agi_range_end: agi_range_end, answer_arr: answer_arr, evolution_values: evolution_values,
+# paiza B017:手役の強さ--------------------------------------------
+cards = gets.chomp.chars.map(&:to_s)
+p cards
+
+p cards_num = cards.group_by(&:itself).transform_values(&:size)
+p cards_num.sort.to_h
+wildcard_num = []
+
+def includejudge?(cards_num)
+    cards_num.key?("*")
+end
+
+p cards_num.rassoc(2)
+
+# if cards_num["*"].between?(3, 4) || 
+#     puts "FourCard"
+# elsif cards_num["*"] == 2
+    
+
+# elsif cards_num["*"] == 1
+    
+# end
+
+
+# case 
+# when card == "*" && num == 4 && num == 3
+#     p "FourCard"
+#     break
+# when card == "*"
+#     wildcard_num = num
+#     p cards_num.max{ |a, b|  }
+# end
+# p "ThreeCard" if num == 3
