@@ -2301,91 +2301,166 @@
 # puts "no evolution" if answer_arr.empty?
 # puts answer_arr
 
+# # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class MonsterEvolution
+#   attr_accessor :att_range_start, :att_range_end,
+#                 :def_range_start, :def_range_end,
+#                 :agi_range_start, :agi_range_end,
+#                 :answer_arr, :evolution_values
+#   attr_reader :attack, :defence, :agility, :num_times
+
+#   def initialize(args)
+#     @att_range_start = args[:att_range_start]
+#     @att_range_end = args[:att_range_end]
+#     @def_range_start = args[:def_range_start]
+#     @def_range_end = args[:def_range_end]
+#     @agi_range_start = args[:agi_range_start]
+#     @agi_range_end = args[:agi_range_end]
+#     @attack = args[:attack]
+#     @defence = args[:defence]
+#     @agility = args[:agility]
+#     @evolution_values = args[:evolution_values]
+#     @answer_arr = []
+#     @num_times = args[:num_times]
+#   end
+
+#   def substitution
+#     num_times.times do
+#       self.evolution_values = gets.split.map(&:to_s)
+#       self.att_range_start = evolution_values[1].to_i
+#       self.att_range_end = evolution_values[2].to_i
+#       self.def_range_start = evolution_values[3].to_i
+#       self.def_range_end = evolution_values[4].to_i
+#       self.agi_range_start = evolution_values[5].to_i
+#       self.agi_range_end = evolution_values[6].to_i
+#       evolutionjudge
+#     end
+#   end
+
+#   def evolutionjudge
+#     if attack.between?(att_range_start, att_range_end) && defence.between?(def_range_start, def_range_end) && agility.between?(agi_range_start, agi_range_end)
+#       self.answer_arr << evolution_values[0]
+#     end
+#   end
+
+#   def output
+#     puts "no evolution" if answer_arr.empty?
+#     puts answer_arr
+#   end
+# end
+
+# attack, defence, agility = gets.split.map(&:to_i)
+# num_times = gets.to_i
+# args = { attack: attack, defence: defence, agility: agility, num_times: num_times }
+# monsterevolution = MonsterEvolution.new(args)
+# monsterevolution.substitution
+# monsterevolution.output
+
+# # paiza B017:手役の強さ--------------------------------------------
+# cards = gets.chomp.chars.map(&:to_s)
+
+# cards_num = cards.group_by(&:itself).transform_values(&:size)
+# # p cards_num = cards_num.sort.to_h
+
+# def includejudge?(cards_num)
+#   cards_num.key?("*")
+# end
+
+# def organize(cards_num)
+#   cards_num.delete("*")
+# end
+
+# if includejudge?(cards_num)
+#   organize(cards_num)
+#   p cards_num.length
+#   case cards_num.length
+#   when 0
+#     puts "FourCard"
+#   when 1
+#     puts "FourCard"
+#   when 2
+#     puts "ThreeCard"
+#   when 3
+#     puts "OnePair"
+#   when 4
+#     puts "NoPair"
+#   end
+# else
+#   case cards_num.length
+#   when 1
+#     puts "FourCard"
+#   when 2
+#     puts "ThreeCard" if cards_num.value?(3)
+#     puts "TwoPair" if cards_num.value?(2)
+#   when 3
+#     puts "OnePair"
+#   when 4
+#     puts "NoPair"
+#   end
+# end
+
 # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class MonsterEvolution
-  attr_accessor :att_range_start, :att_range_end,
-                :def_range_start, :def_range_end,
-                :agi_range_start, :agi_range_end,
-                :answer_arr, :evolution_values
-  attr_reader :attack, :defence, :agility, :num_times
+class CardGame
+  attr_accessor :cards_num
+  attr_reader :cards
 
   def initialize(args)
-    @att_range_start = args[:att_range_start]
-    @att_range_end = args[:att_range_end]
-    @def_range_start = args[:def_range_start]
-    @def_range_end = args[:def_range_end]
-    @agi_range_start = args[:agi_range_start]
-    @agi_range_end = args[:agi_range_end]
-    @attack = args[:attack]
-    @defence = args[:defence]
-    @agility = args[:agility]
-    @evolution_values = args[:evolution_values]
-    @answer_arr = []
-    @num_times = args[:num_times]
+    @cards = args[:cards]
+    @cards_num = create_hash
   end
 
-  def substitution
-    num_times.times do
-      self.evolution_values = gets.split.map(&:to_s)
-      self.att_range_start = evolution_values[1].to_i
-      self.att_range_end = evolution_values[2].to_i
-      self.def_range_start = evolution_values[3].to_i
-      self.def_range_end = evolution_values[4].to_i
-      self.agi_range_start = evolution_values[5].to_i
-      self.agi_range_end = evolution_values[6].to_i
-      evolutionjudge
-    end
+  def create_hash
+    cards.group_by(&:itself).transform_values(&:size)
   end
-
-  def evolutionjudge
-    if attack.between?(att_range_start, att_range_end) && defence.between?(def_range_start, def_range_end) && agility.between?(agi_range_start, agi_range_end)
-      self.answer_arr << evolution_values[0]
-    end
-  end
-
-  def output
-    puts "no evolution" if answer_arr.empty?
-    puts answer_arr
-  end
-end
-
-attack, defence, agility = gets.split.map(&:to_i)
-num_times = gets.to_i
-args = { attack: attack, defence: defence, agility: agility, num_times: num_times }
-monsterevolution = MonsterEvolution.new(args)
-monsterevolution.substitution
-monsterevolution.output
-
-# paiza B017:手役の強さ--------------------------------------------
-cards = gets.chomp.chars.map(&:to_s)
-p cards
-
-p cards_num = cards.group_by(&:itself).transform_values(&:size)
-p cards_num.sort.to_h
-wildcard_num = []
-
-def includejudge?(cards_num)
+  def includejudge?
     cards_num.key?("*")
+  end
+
+  def organize
+    cards_num.delete("*")
+  end
+
+  def include_wildcard
+    case cards_num.length
+    when 0
+      puts "FourCard"
+    when 1
+      puts "FourCard"
+    when 2
+      puts "ThreeCard"
+    when 3
+      puts "OnePair"
+    when 4
+      puts "NoPair"
+    end
+  end
+
+  def not_include_wildcard
+    case cards_num.length
+    when 1
+      puts "FourCard"
+    when 2
+      puts "ThreeCard" if cards_num.value?(3)
+      puts "TwoPair" if cards_num.value?(2)
+    when 3
+      puts "OnePair"
+    when 4
+      puts "NoPair"
+    end
+  end
+
+  def judgement
+    if includejudge?
+      organize
+      include_wildcard
+    else
+      not_include_wildcard
+    end
+  end
 end
 
-p cards_num.rassoc(2)
+cards = gets.chomp.chars.map(&:to_s)
 
-# if cards_num["*"].between?(3, 4) || 
-#     puts "FourCard"
-# elsif cards_num["*"] == 2
-    
-
-# elsif cards_num["*"] == 1
-    
-# end
-
-
-# case 
-# when card == "*" && num == 4 && num == 3
-#     p "FourCard"
-#     break
-# when card == "*"
-#     wildcard_num = num
-#     p cards_num.max{ |a, b|  }
-# end
-# p "ThreeCard" if num == 3
+args = { cards: cards }
+cardgame = CardGame.new(args)
+cardgame.judgement
