@@ -2399,68 +2399,143 @@
 #   end
 # end
 
+# # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class CardGame
+#   attr_accessor :cards_num
+#   attr_reader :cards
+
+#   def initialize(args)
+#     @cards = args[:cards]
+#     @cards_num = create_hash
+#   end
+
+#   def create_hash
+#     cards.group_by(&:itself).transform_values(&:size)
+#   end
+#   def includejudge?
+#     cards_num.key?("*")
+#   end
+
+#   def organize
+#     cards_num.delete("*")
+#   end
+
+#   def include_wildcard
+#     case cards_num.length
+#     when 0
+#       puts "FourCard"
+#     when 1
+#       puts "FourCard"
+#     when 2
+#       puts "ThreeCard"
+#     when 3
+#       puts "OnePair"
+#     when 4
+#       puts "NoPair"
+#     end
+#   end
+
+#   def not_include_wildcard
+#     case cards_num.length
+#     when 1
+#       puts "FourCard"
+#     when 2
+#       puts "ThreeCard" if cards_num.value?(3)
+#       puts "TwoPair" if cards_num.value?(2)
+#     when 3
+#       puts "OnePair"
+#     when 4
+#       puts "NoPair"
+#     end
+#   end
+
+#   def judgement
+#     if includejudge?
+#       organize
+#       include_wildcard
+#     else
+#       not_include_wildcard
+#     end
+#   end
+# end
+
+# cards = gets.chomp.chars.map(&:to_s)
+
+# args = { cards: cards }
+# cardgame = CardGame.new(args)
+# cardgame.judgement
+
+# # paiza B096:爆弾の大爆発------------------------------------------------------------
+# row, column = gets.split.map(&:to_i)
+
+# all_bomb = row.times.map { gets.chomp.chars.map(&:to_s) }
+
+# swap_all_bomb = all_bomb.transpose
+
+# swap_all_bomb.each do |row_bomb|
+#   row_bomb.fill("#") if row_bomb.include?("#")
+# end
+
+# all_bomb.each do |row_bomb|
+#   row_bomb.fill("#") if row_bomb.include?("#")
+# end
+
+# fix_all_bomb = swap_all_bomb.transpose
+
+# num = 0
+# all_bomb.each_with_index do |bomb, index|
+#   if !bomb.include?("#") && fix_all_bomb[index].include?("#")
+#     num += fix_all_bomb[index].count("#")
+#   end
+# end
+
+# p all_bomb.flatten.count("#") + num
+
 # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class CardGame
-  attr_accessor :cards_num
-  attr_reader :cards
+class ExplosionRange
+  attr_accessor :bomb_position, :swap_bomb_position, :fix_bomb_range, :num
+  attr_reader :row
 
   def initialize(args)
-    @cards = args[:cards]
-    @cards_num = create_hash
+    @bomb_position = args[:bomb_position]
+    @swap_bomb_position = horizontal_vertical_replace(bomb_position)
+    @fix_bomb_range = vertical_horizontal_replace(swap_bomb_position)
+    @num = 0
+    @row = args[:row]
   end
 
-  def create_hash
-    cards.group_by(&:itself).transform_values(&:size)
-  end
-  def includejudge?
-    cards_num.key?("*")
+  def horizontal_vertical_replace(bomb_positon)
+    bomb_positon.transpose
   end
 
-  def organize
-    cards_num.delete("*")
+  def vertical_horizontal_replace(swap_bomb_position)
+    swap_bomb_position.transpose
   end
 
-  def include_wildcard
-    case cards_num.length
-    when 0
-      puts "FourCard"
-    when 1
-      puts "FourCard"
-    when 2
-      puts "ThreeCard"
-    when 3
-      puts "OnePair"
-    when 4
-      puts "NoPair"
+  def explosion_range(position)
+    position.each do |row_bomb|
+      row_bomb.fill("#") if row_bomb.include?("#")
     end
   end
 
-  def not_include_wildcard
-    case cards_num.length
-    when 1
-      puts "FourCard"
-    when 2
-      puts "ThreeCard" if cards_num.value?(3)
-      puts "TwoPair" if cards_num.value?(2)
-    when 3
-      puts "OnePair"
-    when 4
-      puts "NoPair"
+  def count_non_overlapping_parts(explosion)
+    explosion.each_with_index do |bomb, index|
+      if !bomb.include?("#") && fix_bomb_range[index].include?("#")
+        num += fix_bomb_range[index].count("#")
+      end
     end
   end
 
-  def judgement
-    if includejudge?
-      organize
-      include_wildcard
-    else
-      not_include_wildcard
-    end
+  def answer_output(answer)
+    p answer.flatten.count("#") + num
   end
 end
 
-cards = gets.chomp.chars.map(&:to_s)
+row, _column = gets.split.map(&:to_i)
+bomb_position = row.times.map { gets.chomp.chars.map(&:to_s) }
 
-args = { cards: cards }
-cardgame = CardGame.new(args)
-cardgame.judgement
+args = { bomb_position: bomb_position }
+explosionrange = ExplosionRange.new(args)
+p explosionrange.explosion_range(bomb_position)
+p explosionrange.explosion_range(swap_bomb_position)
+
