@@ -2465,6 +2465,84 @@
 # cardgame = CardGame.new(args)
 # cardgame.judgement
 
+# # プロを目指す人のためのRuby入門 伊藤 淳一--------------------------------------------------------
+# # クラスオブジェクトの特異メソッド
+# class User
+#   def initialize(name)
+#       @name = name
+#   end
+#   #self.を付けるとクラスメソッドになる
+#   def self.create_users(names)
+#     names.map do |name|
+#       User.new(name)
+#     end
+#   end
+#   #これはインスタンスメソッド
+#   def hello
+#     "Hello,Iam #{@name}."
+#   end
+# end
+
+# names = ['Alice','Bob','Carol']
+# #クラスメソッドの呼び出し
+# users = User.create_users(names)
+# users.each do |user|
+#   #インスタンスメソッドの呼び出し
+#   puts user.hello
+# end
+
+# class Gate
+#   STATIONS = [:umeda, :juso, :mikuni]
+#   FARES = [150, 190]
+
+#   def initialize(name)
+#     @name = name
+#   end
+
+#   # enterメソッドは、引数として渡された切符(Ticket)に自分の駅名を保存する
+#   def enter(ticket)
+#     ticket.stamp(@name)
+#   end
+
+#   # exiメソッドは、引数として渡された切符(Ticket)から運賃(fare)と乗車駅を取得する
+#   # 更に乗車駅と自分の駅名から運賃を割り出す。運賃がたりていればtrueを、そうでなければfalseを返す
+#   def exit(ticket)
+#     fare = calc_fare(ticket)
+#     fare <= ticket.fare
+#   end
+
+#   def calc_fare(ticket)
+#     from = STATIONS.index(ticket.stamped_at)
+#     to = STATIONS.index(@name)
+#     distance = to - from
+#     FARES[distance - 1]
+#   end
+# end
+
+# class Ticket
+#   attr_reader :fare, :stamped_at
+
+#   def initialize(fare)
+#     @fare = fare
+#   end
+
+#   # Ticketクラスにstampというメソッドを用意する。このメソッドに駅名を渡すとその駅名がTicketクラスのインスタンスに保持される
+#   # 乗車駅を取得する場合はTicketクラスのstamp_atメソッドを使う
+#   def stamp(name)
+#     @stamped_at = name
+#   end
+# end
+
+
+# p umeda = Gate.new(:umeda)
+# p juso = Gate.new(:juso)
+# p mikuni = Gate.new(:mikuni)
+
+# p ticket = Ticket.new(150)
+# p umeda.enter(ticket)
+# p mikuni.exit(ticket)
+# p umeda.stamp(ticket)
+
 # # paiza B096:爆弾の大爆発------------------------------------------------------------
 # row, column = gets.split.map(&:to_i)
 
@@ -2491,25 +2569,23 @@
 
 # p all_bomb.flatten.count("#") + num
 
-# クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# # # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 class ExplosionRange
   attr_accessor :bomb_position, :swap_bomb_position, :fix_bomb_range, :num
   attr_reader :row
 
   def initialize(args)
     @bomb_position = args[:bomb_position]
-    @swap_bomb_position = horizontal_vertical_replace(bomb_position)
-    @fix_bomb_range = vertical_horizontal_replace(swap_bomb_position)
     @num = 0
     @row = args[:row]
   end
 
-  def horizontal_vertical_replace(bomb_positon)
-    bomb_positon.transpose
+  def replace(bomb_position)
+    @swap_bomb_position = bomb_position.transpose
   end
 
-  def vertical_horizontal_replace(swap_bomb_position)
-    swap_bomb_position.transpose
+  def vertical_horizontal_replace
+    @fix_bomb_range = swap_bomb_position.transpose
   end
 
   def explosion_range(position)
@@ -2518,16 +2594,20 @@ class ExplosionRange
     end
   end
 
-  def count_non_overlapping_parts(explosion)
-    explosion.each_with_index do |bomb, index|
+  def count_non_overlapping_parts(bomb_position)
+    explosion_range(bomb_position)
+    horizontal_vertical_replace
+    explosion_range(swap_bomb_position)
+    vertical_horizontal_replace
+    bomb_position.each_with_index do |bomb, index|
       if !bomb.include?("#") && fix_bomb_range[index].include?("#")
-        num += fix_bomb_range[index].count("#")
+        self.num = fix_bomb_range[index].count("#")
       end
     end
   end
 
-  def answer_output(answer)
-    p answer.flatten.count("#") + num
+  def answer_output
+    p bomb_position.flatten.count("#") + num
   end
 end
 
@@ -2536,6 +2616,7 @@ bomb_position = row.times.map { gets.chomp.chars.map(&:to_s) }
 
 args = { bomb_position: bomb_position }
 explosionrange = ExplosionRange.new(args)
-p explosionrange.explosion_range(bomb_position)
-p explosionrange.explosion_range(swap_bomb_position)
+explosionrange.count_non_overlapping_parts(bomb_position)
+explosionrange.answer_output
+
 
