@@ -2619,23 +2619,80 @@
 # explosionrange.count_non_overlapping_parts(bomb_position)
 # explosionrange.answer_output
 
-# paiza C062:回転寿司のメロン-------------------------------------
+# # paiza C062:回転寿司のメロン-------------------------------------
 
-num_times = gets.to_i
+# num_times = gets.to_i
 
-sushi_arr = num_times.times.map { gets.chomp.to_s }
+# sushi_arr = num_times.times.map { gets.chomp.to_s }
 
-start_count = 0
-num_count = 0
-melon = 0
-sushi_arr.each.with_index(1) do |sushi, index|
-  if sushi == "melon" && melon == 0
-    start_count = index + 10
-    melon += 1
-  elsif sushi == "melon" && index > start_count
-    start_count = index + 10
-    melon += 1
+# start_count = 0
+# num_count = 0
+# melon = 0
+# sushi_arr.each.with_index(1) do |sushi, index|
+#   if sushi == "melon" && melon == 0
+#     start_count = index + 10
+#     melon += 1
+#   elsif sushi == "melon" && index > start_count
+#     start_count = index + 10
+#     melon += 1
+#   end
+# end
+
+# p melon
+
+# # paiza C022:ローソク足-------------------------------------
+# days = gets.to_i
+
+# stock_price = days.times.map { gets.split.map(&:to_i) }
+
+# stock_swap = stock_price.transpose
+# organize_price = []
+# organize_price << stock_swap[0].first
+# organize_price << stock_swap[1].last
+# organize_price << stock_swap[2].max
+# organize_price << stock_swap[3].min
+
+# puts organize_price.join(" ")
+
+# クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+class StockPrice
+  attr_accessor :stock_swap, :stock_price, :organize_price
+  attr_reader :days
+
+  def initialize(args)
+    @days = args[:days]
+    @stock_price = []
+    @stock_swap = []
+    @organize_price = []
+  end
+
+  def stock_price_survey
+    self.stock_price = days.times.map { gets.split.map(&:to_i) }
+    p stock_price
+  end
+
+  def swap
+    self.stock_swap = stock_price.transpose
+    p stock_swap
+  end
+
+  def all_organize_price
+    self.organize_price << @stock_swap[0].first
+    self.organize_price << @stock_swap[1].last
+    self.organize_price << @stock_swap[2].max
+    self.organize_price << @stock_swap[3].min
+  end
+
+  def answer_output
+    puts self.organize_price.join(" ")
   end
 end
 
-p melon
+days = gets.to_i
+args = { days: days }
+stockprice = StockPrice.new(args)
+stockprice.stock_price_survey
+stockprice.swap
+stockprice.all_organize_price
+stockprice.answer_output
