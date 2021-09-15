@@ -2570,53 +2570,72 @@
 # p all_bomb.flatten.count("#") + num
 
 # # # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class ExplosionRange
-  attr_accessor :bomb_position, :swap_bomb_position, :fix_bomb_range, :num
-  attr_reader :row
+# class ExplosionRange
+#   attr_accessor :bomb_position, :swap_bomb_position, :fix_bomb_range, :num
+#   attr_reader :row
 
-  def initialize(args)
-    @bomb_position = args[:bomb_position]
-    @num = 0
-    @row = args[:row]
-  end
+#   def initialize(args)
+#     @bomb_position = args[:bomb_position]
+#     @num = 0
+#     @row = args[:row]
+#   end
 
-  def replace(bomb_position)
-    @swap_bomb_position = bomb_position.transpose
-  end
+#   def replace(bomb_position)
+#     @swap_bomb_position = bomb_position.transpose
+#   end
 
-  def vertical_horizontal_replace
-    @fix_bomb_range = swap_bomb_position.transpose
-  end
+#   def vertical_horizontal_replace
+#     @fix_bomb_range = swap_bomb_position.transpose
+#   end
 
-  def explosion_range(position)
-    position.each do |row_bomb|
-      row_bomb.fill("#") if row_bomb.include?("#")
-    end
-  end
+#   def explosion_range(position)
+#     position.each do |row_bomb|
+#       row_bomb.fill("#") if row_bomb.include?("#")
+#     end
+#   end
 
-  def count_non_overlapping_parts(bomb_position)
-    explosion_range(bomb_position)
-    horizontal_vertical_replace
-    explosion_range(swap_bomb_position)
-    vertical_horizontal_replace
-    bomb_position.each_with_index do |bomb, index|
-      if !bomb.include?("#") && fix_bomb_range[index].include?("#")
-        self.num = fix_bomb_range[index].count("#")
-      end
-    end
-  end
+#   def count_non_overlapping_parts(bomb_position)
+#     explosion_range(bomb_position)
+#     horizontal_vertical_replace
+#     explosion_range(swap_bomb_position)
+#     vertical_horizontal_replace
+#     bomb_position.each_with_index do |bomb, index|
+#       if !bomb.include?("#") && fix_bomb_range[index].include?("#")
+#         self.num = fix_bomb_range[index].count("#")
+#       end
+#     end
+#   end
 
-  def answer_output
-    p bomb_position.flatten.count("#") + num
+#   def answer_output
+#     p bomb_position.flatten.count("#") + num
+#   end
+# end
+
+# row, _column = gets.split.map(&:to_i)
+# bomb_position = row.times.map { gets.chomp.chars.map(&:to_s) }
+
+# args = { bomb_position: bomb_position }
+# explosionrange = ExplosionRange.new(args)
+# explosionrange.count_non_overlapping_parts(bomb_position)
+# explosionrange.answer_output
+
+# paiza C062:回転寿司のメロン-------------------------------------
+
+num_times = gets.to_i
+
+sushi_arr = num_times.times.map { gets.chomp.to_s }
+
+start_count = 0
+num_count = 0
+melon = 0
+sushi_arr.each.with_index(1) do |sushi, index|
+  if sushi == "melon" && melon == 0
+    start_count = index + 10
+    melon += 1
+  elsif sushi == "melon" && index > start_count
+    start_count = index + 10
+    melon += 1
   end
 end
 
-row, _column = gets.split.map(&:to_i)
-bomb_position = row.times.map { gets.chomp.chars.map(&:to_s) }
-
-args = { bomb_position: bomb_position }
-explosionrange = ExplosionRange.new(args)
-explosionrange.count_non_overlapping_parts(bomb_position)
-explosionrange.answer_output
-
-
+p melon
