@@ -2656,43 +2656,82 @@
 
 # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-class StockPrice
-  attr_accessor :stock_swap, :stock_price, :organize_price
-  attr_reader :days
+# class StockPrice
+#   attr_accessor :stock_swap, :stock_price, :organize_price
+#   attr_reader :days
 
-  def initialize(args)
-    @days = args[:days]
-    @stock_price = []
-    @stock_swap = []
-    @organize_price = []
-  end
+#   def initialize(args)
+#     @days = args[:days]
+#     @stock_price = []
+#     @stock_swap = []
+#     @organize_price = []
+#   end
 
-  def stock_price_survey
-    self.stock_price = days.times.map { gets.split.map(&:to_i) }
-    p stock_price
-  end
+#   def stock_price_survey
+#     self.stock_price = days.times.map { gets.split.map(&:to_i) }
+#   end
 
-  def swap
-    self.stock_swap = stock_price.transpose
-    p stock_swap
-  end
+#   def swap
+#     self.stock_swap = stock_price.transpose
+#   end
 
-  def all_organize_price
-    self.organize_price << @stock_swap[0].first
-    self.organize_price << @stock_swap[1].last
-    self.organize_price << @stock_swap[2].max
-    self.organize_price << @stock_swap[3].min
-  end
+#   def all_organize_price
+#     organize_price << stock_swap[0].first
+#     organize_price << stock_swap[1].last
+#     organize_price << stock_swap[2].max
+#     organize_price << stock_swap[3].min
+#   end
 
-  def answer_output
-    puts self.organize_price.join(" ")
+#   def answer_output
+#     puts organize_price.join(" ")
+#   end
+# end
+
+# days = gets.to_i
+# args = { days: days }
+# stockprice = StockPrice.new(args)
+# stockprice.stock_price_survey
+# stockprice.swap
+# stockprice.all_organize_price
+# stockprice.answer_output
+
+# # FizzBuzz----------------------------------------------
+# class FizzBuzz
+#   attr_reader :int_num
+
+#   def initialize(args)
+#     @int_num = args[:int_num]
+#   end
+
+#   def calclation
+#     if int_num % 15 == 0
+#       puts "FizzBuzz"
+#     elsif int_num % 5 == 0
+#       puts "Buzz"
+#     elsif int_num % 3 == 0
+#       puts "Fizz"
+#     else
+#       puts int_num
+#     end
+#   end
+# end
+
+# int_num = gets.to_i
+# args = { int_num: int_num }
+# fizzbuzz = FizzBuzz.new(args)
+# fizzbuzz.calclation
+
+# 1〜100までの数字をFizzBuzzで処理---------------------------
+(1..100).each do |num|
+  if (num % 15 ).zero?
+    puts "FizzBuzz"
+  elsif (num % 5).zero?
+    puts "Buzz"
+  elsif (num % 3).zero?
+    puts "Fizz"
+  else
+    puts num
   end
 end
 
-days = gets.to_i
-args = { days: days }
-stockprice = StockPrice.new(args)
-stockprice.stock_price_survey
-stockprice.swap
-stockprice.all_organize_price
-stockprice.answer_output
+
