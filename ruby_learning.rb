@@ -2721,17 +2721,77 @@
 # fizzbuzz = FizzBuzz.new(args)
 # fizzbuzz.calclation
 
-# 1〜100までの数字をFizzBuzzで処理---------------------------
-(1..100).each do |num|
-  if (num % 15 ).zero?
-    puts "FizzBuzz"
-  elsif (num % 5).zero?
-    puts "Buzz"
-  elsif (num % 3).zero?
-    puts "Fizz"
-  else
-    puts num
+# # 1〜100までの数字をFizzBuzzで処理---------------------------
+# (1..100).each do |num|
+#   if (num % 15 ).zero?
+#     puts "FizzBuzz"
+#   elsif (num % 5).zero?
+#     puts "Buzz"
+#   elsif (num % 3).zero?
+#     puts "Fizz"
+#   else
+#     puts num
+#   end
+# end
+
+# # paiza C015:ポイントカードの計算---------------------------------
+# num_times = gets.to_i
+
+# receipt_array = []
+# receipt_array = num_times.times.map { gets.split.map(&:to_i) }
+
+# point = 0
+
+# receipt_array.each do |receipt|
+#   if (receipt - [3, 13, 23, 30, 31]).length == 1
+#     point += (receipt[1] * 0.03).floor
+#   elsif (receipt - [5, 15, 25]).length == 1
+#     point += (receipt[1] * 0.05).floor
+#   else
+#     point += (receipt[1] * 0.01).floor
+#   end
+# end
+
+# p point
+
+# クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+class PointCalc
+  POINT = 0
+  ONE_PERCENT = 0.01
+  THREE_PERCENT = 0.03
+  FIVE_PERCENT = 0.05
+  DAY_WITH_3 = [3, 13, 23, 30, 31]
+  DAY_WITH_5 = [5, 15, 25]
+
+  attr_accessor :receipt_array, :point
+  attr_reader :num_times
+
+  def initialize(args)
+    @receipt_array = []
+    @point = POINT
+    @num_times = args[:num_times]
+  end
+
+  def create_array
+    self.receipt_array = num_times.times.map { gets.split.map(&:to_i) }
+  end
+
+  def determine_the_day
+    receipt_array.each do |receipt|
+      if (receipt - DAY_WITH_3).length == 1
+        self.point += (receipt[1] * THREE_PERCENT).floor
+      elsif (receipt - DAY_WITH_5).length == 1
+        self.point += (receipt[1] * FIVE_PERCENT).floor
+      else
+        self.point += (receipt[1] * ONE_PERCENT).floor
+      end
+    end
+    p point
   end
 end
 
-
+num_times = gets.to_i
+args = { num_times: num_times }
+pointcalc = PointCalc.new(args)
+pointcalc.create_array
+pointcalc.determine_the_day
