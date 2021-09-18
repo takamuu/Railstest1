@@ -2504,7 +2504,7 @@
 #     ticket.stamp(@name)
 #   end
 
-#   # exiメソッドは、引数として渡された切符(Ticket)から運賃(fare)と乗車駅を取得する
+#   # exitメソッドは、引数として渡された切符(Ticket)から運賃(fare)と乗車駅を取得する
 #   # 更に乗車駅と自分の駅名から運賃を割り出す。運賃がたりていればtrueを、そうでなければfalseを返す
 #   def exit(ticket)
 #     fare = calc_fare(ticket)
@@ -2754,44 +2754,95 @@
 
 # p point
 
-# クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class PointCalc
-  POINT = 0
-  ONE_PERCENT = 0.01
-  THREE_PERCENT = 0.03
-  FIVE_PERCENT = 0.05
-  DAY_WITH_3 = [3, 13, 23, 30, 31]
-  DAY_WITH_5 = [5, 15, 25]
+# # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class PointCalc
+#   POINT = 0
+#   ONE_PERCENT = 0.01
+#   THREE_PERCENT = 0.03
+#   FIVE_PERCENT = 0.05
+#   DAY_WITH_3 = [3, 13, 23, 30, 31]
+#   DAY_WITH_5 = [5, 15, 25]
 
-  attr_accessor :receipt_array, :point
-  attr_reader :num_times
+#   attr_accessor :receipt_array, :point
+#   attr_reader :num_times
+
+#   def initialize(args)
+#     @receipt_array = []
+#     @point = POINT
+#     @num_times = args[:num_times]
+#   end
+
+#   def create_array
+#     self.receipt_array = num_times.times.map { gets.split.map(&:to_i) }
+#   end
+
+#   def determine_the_day
+#     receipt_array.each do |receipt|
+#       if (receipt - DAY_WITH_3).length == 1
+#         self.point += (receipt[1] * THREE_PERCENT).floor
+#       elsif (receipt - DAY_WITH_5).length == 1
+#         self.point += (receipt[1] * FIVE_PERCENT).floor
+#       else
+#         self.point += (receipt[1] * ONE_PERCENT).floor
+#       end
+#     end
+#     p point
+#   end
+# end
+
+# num_times = gets.to_i
+# args = { num_times: num_times }
+# pointcalc = PointCalc.new(args)
+# pointcalc.create_array
+# pointcalc.determine_the_day
+
+# # paiza C095:合言葉---------------------------------------------------------
+# password = gets.chomp.chars.map(&:to_s)
+
+# string_array = gets.chomp.chars.map(&:to_s)
+
+# all_pattern = password.permutation(password.length).to_a
+
+# if password == string_array
+#   puts "NO"
+# elsif all_pattern.include?(string_array)
+#   puts "YES"
+# else
+#   puts "NO"
+# end
+
+# クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+class Password
+  attr_accessor :all_password_pattern, :string_array
+  attr_reader :initial_password
 
   def initialize(args)
-    @receipt_array = []
-    @point = POINT
-    @num_times = args[:num_times]
+    @initial_password = args[:initial_password]
   end
 
-  def create_array
-    self.receipt_array = num_times.times.map { gets.split.map(&:to_i) }
+  def get_string
+    self.string_array = gets.chomp.chars.map(&:to_s)
   end
 
-  def determine_the_day
-    receipt_array.each do |receipt|
-      if (receipt - DAY_WITH_3).length == 1
-        self.point += (receipt[1] * THREE_PERCENT).floor
-      elsif (receipt - DAY_WITH_5).length == 1
-        self.point += (receipt[1] * FIVE_PERCENT).floor
-      else
-        self.point += (receipt[1] * ONE_PERCENT).floor
-      end
+  def generate_all_permutations
+    self.all_password_pattern = initial_password.permutation.to_a
+  end
+
+  def password_judge
+    if initial_password == string_array
+      puts "NO"
+    elsif all_password_pattern.include?(string_array)
+      puts "YES"
+    else
+      puts "NO"
     end
-    p point
   end
 end
 
-num_times = gets.to_i
-args = { num_times: num_times }
-pointcalc = PointCalc.new(args)
-pointcalc.create_array
-pointcalc.determine_the_day
+initial_password = gets.chomp.chars.map(&:to_s)
+args = { initial_password: initial_password }
+
+password = Password.new(args)
+password.get_string
+password.generate_all_permutations
+password.password_judge
