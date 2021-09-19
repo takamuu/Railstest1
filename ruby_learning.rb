@@ -2846,3 +2846,20 @@ password = Password.new(args)
 password.get_string
 password.generate_all_permutations
 password.password_judge
+
+# paiza C056:テストの採点---------------------------------------------------------------
+num_times, passing_score = gets.split.map(&:to_i)
+
+student_grades = num_times.times.map { gets.split.map(&:to_i) }
+
+student_number = []
+student_grades.each.with_index(1) do |grade, index|
+  if grade.first - (grade.last * 5) < 0
+    grade[1] = 0
+    student_number << index if grade.first - (grade.last * 5) >= passing_score
+  else
+    student_number << index if grade.first - (grade.last * 5) >= passing_score
+  end
+end
+
+puts student_number
