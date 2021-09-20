@@ -2811,55 +2811,132 @@
 #   puts "NO"
 # end
 
+# # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class Password
+#   attr_accessor :all_password_pattern, :string_array
+#   attr_reader :initial_password
+
+#   def initialize(args)
+#     @initial_password = args[:initial_password]
+#   end
+
+#   def get_string
+#     self.string_array = gets.chomp.chars.map(&:to_s)
+#   end
+
+#   def generate_all_permutations
+#     self.all_password_pattern = initial_password.permutation.to_a
+#   end
+
+#   def password_judge
+#     if initial_password == string_array
+#       puts "NO"
+#     elsif all_password_pattern.include?(string_array)
+#       puts "YES"
+#     else
+#       puts "NO"
+#     end
+#   end
+# end
+
+# initial_password = gets.chomp.chars.map(&:to_s)
+# args = { initial_password: initial_password }
+
+# password = Password.new(args)
+# password.get_string
+# password.generate_all_permutations
+# password.password_judge
+
+# # paiza C056:テストの採点---------------------------------------------------------------
+# num_times, passing_score = gets.split.map(&:to_i)
+
+# student_grades = num_times.times.map { gets.split.map(&:to_i) }
+
+# student_number = []
+# student_grades.each.with_index(1) do |grade, index|
+#   if grade.first - (grade.last * 5) < 0
+#     grade[1] = 0
+#     student_number << index if grade.first - (grade.last * 5) >= passing_score
+#   else
+#     student_number << index if grade.first - (grade.last * 5) >= passing_score
+#   end
+# end
+
+# puts student_number
+
+# # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class TestScoring
+#   attr_accessor :student_number, :student_grades
+#   attr_reader :num_times, :passing_score
+
+#   def initialize(args)
+#     @num_times = args[:num_times]
+#     @passing_score = args[:passing_score]
+#     @student_number = []
+#   end
+
+#   def create_array
+#     self.student_grades = num_times.times.map { gets.split.map(&:to_i) }
+#   end
+#   def pass_judgment(grade, index)
+#     student_number << index if grade.first - (grade.last * 5) >= passing_score
+#   end
+
+#   def process_grades
+#     student_grades.each.with_index(1) do |grade, index|
+#       if grade.first - (grade.last * 5) < 0
+#         grade[1] = 0
+#         pass_judgment(grade, index)
+#       else
+#         pass_judgment(grade, index)
+#       end
+#     end
+#     puts student_number
+#   end
+# end
+
+# num_times, passing_score = gets.split.map(&:to_i)
+
+# args = { num_times: num_times, passing_score: passing_score  }
+# testscoring = TestScoring.new(args)
+# testscoring.create_array
+# testscoring.process_grades
+
+# # paiza C051:カード並べ--------------------------------------------
+# card = gets.split(" ").map(&:to_i)
+
+# all_card = card.permutation(4).to_a
+
+# sum_num = []
+# all_card.each do |cards|
+#   sum_num << cards[0..1].join.to_i + cards[2..3].join.to_i
+# end
+
+# p sum_num.max
+
 # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class Password
-  attr_accessor :all_password_pattern, :string_array
-  attr_reader :initial_password
+class CardArrangement
+  attr_accessor :all_card_patterns, :sum_num_array
+  attr_reader :get_card
 
   def initialize(args)
-    @initial_password = args[:initial_password]
+    @get_card = args[:get_card]
+    @sum_num_array = []
   end
 
-  def get_string
-    self.string_array = gets.chomp.chars.map(&:to_s)
+  def create_all_patterns
+    self.all_card_patterns = get_card.permutation(4).to_a
   end
 
-  def generate_all_permutations
-    self.all_password_pattern = initial_password.permutation.to_a
-  end
-
-  def password_judge
-    if initial_password == string_array
-      puts "NO"
-    elsif all_password_pattern.include?(string_array)
-      puts "YES"
-    else
-      puts "NO"
+  def card_calculation
+    all_card_patterns.each do |card|
+      sum_num_array << card[0..1].join.to_i + card[2..3].join.to_i
     end
+    p sum_num_array.max
   end
 end
 
-initial_password = gets.chomp.chars.map(&:to_s)
-args = { initial_password: initial_password }
-
-password = Password.new(args)
-password.get_string
-password.generate_all_permutations
-password.password_judge
-
-# paiza C056:テストの採点---------------------------------------------------------------
-num_times, passing_score = gets.split.map(&:to_i)
-
-student_grades = num_times.times.map { gets.split.map(&:to_i) }
-
-student_number = []
-student_grades.each.with_index(1) do |grade, index|
-  if grade.first - (grade.last * 5) < 0
-    grade[1] = 0
-    student_number << index if grade.first - (grade.last * 5) >= passing_score
-  else
-    student_number << index if grade.first - (grade.last * 5) >= passing_score
-  end
-end
-
-puts student_number
+get_card = gets.split(" ").map(&:to_i)
+card_arrangement = CardArrangement.new(get_card: get_card)
+card_arrangement.create_all_patterns
+card_arrangement.card_calculation
