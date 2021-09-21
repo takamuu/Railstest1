@@ -2914,29 +2914,56 @@
 
 # p sum_num.max
 
+# # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class CardArrangement
+#   attr_accessor :all_card_patterns, :sum_num_array
+#   attr_reader :get_card
+
+#   def initialize(args)
+#     @get_card = args[:get_card]
+#     @sum_num_array = []
+#   end
+
+#   def create_all_patterns
+#     self.all_card_patterns = get_card.permutation(4).to_a
+#   end
+
+#   def card_calculation
+#     all_card_patterns.each do |card|
+#       sum_num_array << card[0..1].join.to_i + card[2..3].join.to_i
+#     end
+#     p sum_num_array.max
+#   end
+# end
+
+# get_card = gets.split(" ").map(&:to_i)
+# card_arrangement = CardArrangement.new(get_card: get_card)
+# card_arrangement.create_all_patterns
+# card_arrangement.card_calculation
+
+# # paiza C074:【クロニクルコラボ問題】文章サイズ変更------------------------------------
+# height, _width, fix_width = gets.split(" ").map(&:to_i)
+
+# all_strings = height.times.map { gets.chomp.to_s }
+# puts all_strings.join.scan(/.{1,#{fix_width}}/)
+
 # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class CardArrangement
-  attr_accessor :all_card_patterns, :sum_num_array
-  attr_reader :get_card
+class ChangeTextSize
+  attr_reader :height, :fix_width, :all_strings
 
   def initialize(args)
-    @get_card = args[:get_card]
-    @sum_num_array = []
+    @height = args[:height]
+    @fix_width = args[:fix_width]
+    @all_strings = args[:all_strings]
   end
 
-  def create_all_patterns
-    self.all_card_patterns = get_card.permutation(4).to_a
-  end
-
-  def card_calculation
-    all_card_patterns.each do |card|
-      sum_num_array << card[0..1].join.to_i + card[2..3].join.to_i
-    end
-    p sum_num_array.max
+  def string_output
+    puts all_strings.join.scan(/.{1,#{fix_width}}/)
   end
 end
 
-get_card = gets.split(" ").map(&:to_i)
-card_arrangement = CardArrangement.new(get_card: get_card)
-card_arrangement.create_all_patterns
-card_arrangement.card_calculation
+height, _width, fix_width = gets.split(" ").map(&:to_i)
+all_strings = height.times.map { gets.chomp.to_s }
+
+args = { height: height, fix_width: fix_width, all_strings: all_strings }
+ChangeTextSize.new(args).string_output
