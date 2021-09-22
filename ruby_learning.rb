@@ -2947,23 +2947,42 @@
 # all_strings = height.times.map { gets.chomp.to_s }
 # puts all_strings.join.scan(/.{1,#{fix_width}}/)
 
-# クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-class ChangeTextSize
-  attr_reader :height, :fix_width, :all_strings
+# # クラス化↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# class ChangeTextSize
+#   attr_reader :height, :fix_width, :all_strings
 
-  def initialize(args)
-    @height = args[:height]
-    @fix_width = args[:fix_width]
-    @all_strings = args[:all_strings]
-  end
+#   def initialize(args)
+#     @height = args[:height]
+#     @fix_width = args[:fix_width]
+#     @all_strings = args[:all_strings]
+#   end
 
-  def string_output
-    puts all_strings.join.scan(/.{1,#{fix_width}}/)
-  end
+#   def string_output
+#     puts all_strings.join.scan(/.{1,#{fix_width}}/)
+#   end
+# end
+
+# height, _width, fix_width = gets.split(" ").map(&:to_i)
+# all_strings = height.times.map { gets.chomp.to_s }
+
+# args = { height: height, fix_width: fix_width, all_strings: all_strings }
+# ChangeTextSize.new(args).string_output
+
+# paiza Cランク
+# 方針
+# 解答を格納する変数 ans を置き、0 で初期化します。
+# 開始地点を先頭から順にずらしながら、t を s と同じ長さだけ切り取り、s と一致するかどうかを確認します。一致した場合は ans に 1 を加算します。
+# t の長さが len(t) 、s の長さが len(s) の時、t を s と同じ長さだけ切り取れるのは、切り取る範囲の先頭が 0 文字目から len(t) - len(s) 文字目の時のみであることに注意してください。
+# 最終的な ans を出力すれば OK です。
+
+pattern = gets.chomp
+string = gets.chomp
+
+result = 0
+(0..(string.size - pattern.size)).each do |i|
+  substring = string.slice(i, pattern.size)
+
+  result += 1 if substring == pattern
 end
 
-height, _width, fix_width = gets.split(" ").map(&:to_i)
-all_strings = height.times.map { gets.chomp.to_s }
-
-args = { height: height, fix_width: fix_width, all_strings: all_strings }
-ChangeTextSize.new(args).string_output
+puts result
