@@ -2986,3 +2986,111 @@ result = 0
 end
 
 puts result
+
+# paiza Crank 5以上の整数の合計---------------------------------------------------
+loop = gets.chomp.to_i
+ans = 0
+
+(1..loop).each do |i|
+  num = gets.chomp.to_i
+
+  ans = ans + num if num >= 5
+end
+
+puts ans
+
+# 自分の回答---------------------------------------------------------------------
+num_times = gets.to_i
+
+int_array = num_times.times.map { gets.to_i }
+sum_answer = 0
+int_array.each { |i| sum_answer += i if i >= 5 }
+p sum_answer
+
+# paiza Crank 足すか掛けるか-------------------------------------------------------
+count = gets.chomp.to_i
+sum = 0
+
+(1..count).each do |i|
+  line = gets.chomp.split(" ")
+  if line[0].to_i == line[1].to_i
+    sum += line[0].to_i * line[1].to_i
+  else
+    sum += line[0].to_i + line[1].to_i
+  end
+end
+
+puts sum
+# 自分の回答---------------------------------------------------------------------
+loop = gets.chomp.to_i
+
+ans = 0
+(1..loop).each do |i|
+  first, second = gets.split.map(&:to_i)
+
+  if first == second
+    ans += first * second
+  else
+    ans += first + second
+  end
+end
+
+p ans
+
+# paiza Drank 文字列を切り取る---------------------------------------------------
+nums = gets.chomp.split(" ")
+str = gets.chomp
+
+((nums[0].to_i - 1)..(nums[1].to_i - 1)).each { |i| print str[i] }
+
+print "\n"
+
+# 自分の回答---------------------------------------------------------------------
+start, finish = gets.split.map(&:to_i)
+start -= 1
+finish -= 1
+strings = gets.chomp.to_s
+puts strings.slice(start..finish)
+
+# paiza Crank 指定範囲だけ大文字--------------------------------------------------
+nums = gets.chomp.split(' ')
+str = gets.chomp
+
+(1..(str.size)).each do |i|
+  if nums[0].to_i <= i && i <= nums[1].to_i
+    print str[i - 1].upcase
+  else
+    print str[i - 1]
+  end
+end
+
+print "\n"
+
+# 自分の回答---------------------------------------------------------------------
+start, finish = gets.split.map(&:to_i)
+
+start -= 1
+finish -= 1
+
+strings = gets.chomp.to_s
+strings[start..finish] = strings.slice(start..finish).upcase
+
+puts strings
+
+# paiza Drank 文字の重複カウント------------------------------------------------
+query = gets.chomp
+source = gets.chomp
+
+puts source.count(query)
+
+# 自分の回答---------------------------------------------------------------------
+str = gets.chomp
+
+sentence = gets.chomp
+count = 0
+(0..(sentence.size - 1)).each do |i|
+  count += 1 if sentence[i] == str
+end
+p count
+
+ 
