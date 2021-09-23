@@ -2968,129 +2968,148 @@
 # args = { height: height, fix_width: fix_width, all_strings: all_strings }
 # ChangeTextSize.new(args).string_output
 
-# paiza Cランク
-# 方針
-# 解答を格納する変数 ans を置き、0 で初期化します。
-# 開始地点を先頭から順にずらしながら、t を s と同じ長さだけ切り取り、s と一致するかどうかを確認します。一致した場合は ans に 1 を加算します。
-# t の長さが len(t) 、s の長さが len(s) の時、t を s と同じ長さだけ切り取れるのは、切り取る範囲の先頭が 0 文字目から len(t) - len(s) 文字目の時のみであることに注意してください。
-# 最終的な ans を出力すれば OK です。
+# # paiza Cランク
+# # 方針
+# # 解答を格納する変数 ans を置き、0 で初期化します。
+# # 開始地点を先頭から順にずらしながら、t を s と同じ長さだけ切り取り、s と一致するかどうかを確認します。一致した場合は ans に 1 を加算します。
+# # t の長さが len(t) 、s の長さが len(s) の時、t を s と同じ長さだけ切り取れるのは、切り取る範囲の先頭が 0 文字目から len(t) - len(s) 文字目の時のみであることに注意してください。
+# # 最終的な ans を出力すれば OK です。
 
-pattern = gets.chomp
-string = gets.chomp
+# pattern = gets.chomp
+# string = gets.chomp
 
-result = 0
-(0..(string.size - pattern.size)).each do |i|
-  substring = string.slice(i, pattern.size)
+# result = 0
+# (0..(string.size - pattern.size)).each do |i|
+#   substring = string.slice(i, pattern.size)
 
-  result += 1 if substring == pattern
-end
+#   result += 1 if substring == pattern
+# end
 
-puts result
+# puts result
 
-# paiza Crank 5以上の整数の合計---------------------------------------------------
-loop = gets.chomp.to_i
-ans = 0
+# # paiza Crank 5以上の整数の合計---------------------------------------------------
+# loop = gets.chomp.to_i
+# ans = 0
 
-(1..loop).each do |i|
-  num = gets.chomp.to_i
+# (1..loop).each do |i|
+#   num = gets.chomp.to_i
 
-  ans = ans + num if num >= 5
-end
+#   ans = ans + num if num >= 5
+# end
 
-puts ans
+# puts ans
 
-# 自分の回答---------------------------------------------------------------------
-num_times = gets.to_i
+# # 自分の回答---------------------------------------------------------------------
+# num_times = gets.to_i
 
-int_array = num_times.times.map { gets.to_i }
-sum_answer = 0
-int_array.each { |i| sum_answer += i if i >= 5 }
-p sum_answer
+# int_array = num_times.times.map { gets.to_i }
+# sum_answer = 0
+# int_array.each { |i| sum_answer += i if i >= 5 }
+# p sum_answer
 
-# paiza Crank 足すか掛けるか-------------------------------------------------------
-count = gets.chomp.to_i
-sum = 0
+# # paiza Crank 足すか掛けるか-------------------------------------------------------
+# count = gets.chomp.to_i
+# sum = 0
 
-(1..count).each do |i|
-  line = gets.chomp.split(" ")
-  if line[0].to_i == line[1].to_i
-    sum += line[0].to_i * line[1].to_i
-  else
-    sum += line[0].to_i + line[1].to_i
-  end
-end
+# (1..count).each do |i|
+#   line = gets.chomp.split(" ")
+#   if line[0].to_i == line[1].to_i
+#     sum += line[0].to_i * line[1].to_i
+#   else
+#     sum += line[0].to_i + line[1].to_i
+#   end
+# end
 
-puts sum
-# 自分の回答---------------------------------------------------------------------
-loop = gets.chomp.to_i
+# puts sum
+# # 自分の回答---------------------------------------------------------------------
+# loop = gets.chomp.to_i
 
-ans = 0
-(1..loop).each do |i|
-  first, second = gets.split.map(&:to_i)
+# ans = 0
+# (1..loop).each do |i|
+#   first, second = gets.split.map(&:to_i)
 
-  if first == second
-    ans += first * second
-  else
-    ans += first + second
-  end
-end
+#   if first == second
+#     ans += first * second
+#   else
+#     ans += first + second
+#   end
+# end
 
-p ans
+# p ans
 
-# paiza Drank 文字列を切り取る---------------------------------------------------
-nums = gets.chomp.split(" ")
+# # paiza Drank 文字列を切り取る---------------------------------------------------
+# nums = gets.chomp.split(" ")
+# str = gets.chomp
+
+# ((nums[0].to_i - 1)..(nums[1].to_i - 1)).each { |i| print str[i] }
+
+# print "\n"
+
+# # 自分の回答---------------------------------------------------------------------
+# start, finish = gets.split.map(&:to_i)
+# start -= 1
+# finish -= 1
+# strings = gets.chomp.to_s
+# puts strings.slice(start..finish)
+
+# # paiza Crank 指定範囲だけ大文字--------------------------------------------------
+# nums = gets.chomp.split(' ')
+# str = gets.chomp
+
+# (1..(str.size)).each do |i|
+#   if nums[0].to_i <= i && i <= nums[1].to_i
+#     print str[i - 1].upcase
+#   else
+#     print str[i - 1]
+#   end
+# end
+
+# print "\n"
+
+# # 自分の回答---------------------------------------------------------------------
+# start, finish = gets.split.map(&:to_i)
+
+# start -= 1
+# finish -= 1
+
+# strings = gets.chomp.to_s
+# strings[start..finish] = strings.slice(start..finish).upcase
+
+# puts strings
+
+# # paiza Drank 文字の重複カウント------------------------------------------------
+# query = gets.chomp
+# source = gets.chomp
+
+# puts source.count(query)
+
+# # 自分の回答---------------------------------------------------------------------
+# str = gets.chomp
+
+# sentence = gets.chomp
+# count = 0
+# (0..(sentence.size - 1)).each do |i|
+#   count += 1 if sentence[i] == str
+# end
+# p count
+
+# # paiza Drank 5 文字列の n 文字目と n + 1 文字目------------------------------------
+# # 自分の回答のみ-------------------------------------------------------
+#  num = gets.to_i
+#  str = gets.chomp
+#  if str.slice(num).nil?
+#   puts str.slice(num - 1)
+#  else
+#   puts "#{str.slice(num - 1)} " "#{str.slice(num)}"
+#  end
+
+# paiza Crank 文字列の重複カウント---------------------------------------------------
+# 自分の回答のみ-------------------------------------------------------
 str = gets.chomp
-
-((nums[0].to_i - 1)..(nums[1].to_i - 1)).each { |i| print str[i] }
-
-print "\n"
-
-# 自分の回答---------------------------------------------------------------------
-start, finish = gets.split.map(&:to_i)
-start -= 1
-finish -= 1
-strings = gets.chomp.to_s
-puts strings.slice(start..finish)
-
-# paiza Crank 指定範囲だけ大文字--------------------------------------------------
-nums = gets.chomp.split(' ')
-str = gets.chomp
-
-(1..(str.size)).each do |i|
-  if nums[0].to_i <= i && i <= nums[1].to_i
-    print str[i - 1].upcase
-  else
-    print str[i - 1]
-  end
-end
-
-print "\n"
-
-# 自分の回答---------------------------------------------------------------------
-start, finish = gets.split.map(&:to_i)
-
-start -= 1
-finish -= 1
-
-strings = gets.chomp.to_s
-strings[start..finish] = strings.slice(start..finish).upcase
-
-puts strings
-
-# paiza Drank 文字の重複カウント------------------------------------------------
-query = gets.chomp
-source = gets.chomp
-
-puts source.count(query)
-
-# 自分の回答---------------------------------------------------------------------
-str = gets.chomp
-
-sentence = gets.chomp
+strings = gets.chomp
 count = 0
-(0..(sentence.size - 1)).each do |i|
-  count += 1 if sentence[i] == str
+(0..(strings.size - str.size)).each do |i|
+  temporary = strings.slice(i, str.size)
+  count += 1 if temporary == str
 end
 p count
-
- 
