@@ -3113,3 +3113,9 @@ count = 0
   count += 1 if temporary == str
 end
 p count
+
+# paiza Crank アルファベット探し-----------------------------------------------
+first_str = gets.chomp
+second_str = gets.chomp
+third_str = gets.chomp
+p (first_str..second_str).to_a.include?(third_str)
