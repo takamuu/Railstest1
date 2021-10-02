@@ -3103,19 +3103,51 @@
 #   puts "#{str.slice(num - 1)} " "#{str.slice(num)}"
 #  end
 
-# paiza Crank 文字列の重複カウント---------------------------------------------------
-# 自分の回答のみ-------------------------------------------------------
-str = gets.chomp
-strings = gets.chomp
-count = 0
-(0..(strings.size - str.size)).each do |i|
-  temporary = strings.slice(i, str.size)
-  count += 1 if temporary == str
-end
-p count
+# # paiza Crank 文字列の重複カウント---------------------------------------------------
+# # 自分の回答のみ-------------------------------------------------------
+# str = gets.chomp
+# strings = gets.chomp
+# count = 0
+# (0..(strings.size - str.size)).each do |i|
+#   temporary = strings.slice(i, str.size)
+#   count += 1 if temporary == str
+# end
+# p count
 
-# paiza Crank アルファベット探し-----------------------------------------------
-first_str = gets.chomp
-second_str = gets.chomp
-third_str = gets.chomp
-p (first_str..second_str).to_a.include?(third_str)
+# # paiza Crank アルファベット探し-----------------------------------------------
+# first_str = gets.chomp
+# second_str = gets.chomp
+# third_str = gets.chomp
+# p (first_str..second_str).to_a.include?(third_str)
+
+# # paiza 解答
+# string = []
+# 3.times { string.push(gets.chomp) }
+# puts string[0].ord <= string[2].ord && string[2].ord <= string[1].ord
+
+# # paiza Crank 文字と整数の組のソート-----------------------------------------------
+# num_times = gets.chomp.to_i
+
+# array = []
+# num_times.times { array.push(gets.chomp.split(" ")) }
+
+# array.sort! do |a, b|
+#   a.last.to_i <=> b.last.to_i
+# end
+
+# array.each do |str|
+#   puts str.first
+# end
+
+# paiza解答 
+num = gets.chomp.to_i
+array = {}
+# ↓この処理方法をマスターするべき！ (1..num).each と hashの数字に文字をぶっこむ方法
+(1..num).each do
+  line = gets.chomp.split(" ")
+  array[line[1].to_i] = line[0]
+end
+
+array = array.sort
+
+array.each { |ele| puts ele[1] }
