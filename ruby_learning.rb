@@ -3151,3 +3151,16 @@ end
 array = array.sort
 
 array.each { |ele| puts ele[1] }
+
+# paiza Crank
+num = gets.to_i
+p num
+array = []
+
+(1..num).each do
+  line = gets.chomp.split(" ")
+  p line[1] = line[1].to_i
+  array << [line[0], line[1].to_i]
+end
+p array
+p Hash[*array]
