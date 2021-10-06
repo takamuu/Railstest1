@@ -3139,28 +3139,80 @@
 #   puts str.first
 # end
 
-# paiza解答 
-num = gets.chomp.to_i
-array = {}
-# ↓この処理方法をマスターするべき！ (1..num).each と hashの数字に文字をぶっこむ方法
-(1..num).each do
-  line = gets.chomp.split(" ")
-  array[line[1].to_i] = line[0]
-end
+# # paiza解答 
+# num = gets.chomp.to_i
+# array = {}
+# # ↓この処理方法をマスターするべき！ (1..num).each と hashの数字に文字をぶっこむ方法
+# (1..num).each do
+#   line = gets.chomp.split(" ")
+#   array[line[1].to_i] = line[0]
+# end
 
-array = array.sort
+# array = array.sort
 
-array.each { |ele| puts ele[1] }
+# array.each { |ele| puts ele[1] }
 
 # paiza Crank
-num = gets.to_i
-p num
-array = []
+num = gets.chomp.to_i
+array = {}
 
 (1..num).each do
-  line = gets.chomp.split(" ")
-  p line[1] = line[1].to_i
-  array << [line[0], line[1].to_i]
+  values = gets.split(" ")
+  string = values[0]
+  points = values[1].to_i
+  p array[string]
+  if array[string]
+    p current = array[string]
+    p array[string] = current + points
+  else
+    p array[string] = points
+  end
 end
 p array
-p Hash[*array]
+array = array.sort_by { |_string, points| -points }
+
+array.each { |string, points| puts "#{string} #{points}" }
+
+
+# paiza Crank---------------------------------------------------------
+num = gets.to_i
+
+blood_array = {}
+(1..num).each do
+  name, blood_type = gets.chomp.split(" ")
+  blood_array[name] = blood_type
+end
+
+num2 = gets.to_i
+
+fortune_array = {}
+(1..num2).each do
+  blood_type, fortune = gets.chomp.split(" ")
+  fortune_array[blood_type] = fortune
+end
+
+blood_array.each do |a, b|
+  puts "#{a} #{fortune_array[b]}"
+end
+
+# 模範解答---------------------------------------------------------
+n = gets.chomp.to_i
+user2blood = {}
+(1..n).each do
+  user, blood = gets.chomp.split(" ")
+  user2blood[user] = blood
+end
+
+m = gets.chomp.to_i
+blood2result = {}
+(1..m).each do
+  blood, result = gets.chomp.split(" ")
+  blood2result[blood] = result
+end
+
+users = user2blood.keys
+users.each do |user|
+  blood = user2blood[user]
+  result = blood2result[blood]
+  puts "#{user} #{result}"
+end
