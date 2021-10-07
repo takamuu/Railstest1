@@ -3152,67 +3152,112 @@
 
 # array.each { |ele| puts ele[1] }
 
-# paiza Crank
-num = gets.chomp.to_i
-array = {}
+# # paiza Crank
+# num = gets.chomp.to_i
+# array = {}
 
-(1..num).each do
-  values = gets.split(" ")
-  string = values[0]
-  points = values[1].to_i
-  p array[string]
-  if array[string]
-    p current = array[string]
-    p array[string] = current + points
-  else
-    p array[string] = points
+# (1..num).each do
+#   values = gets.split(" ")
+#   string = values[0]
+#   points = values[1].to_i
+#   p array[string]
+#   if array[string]
+#     p current = array[string]
+#     p array[string] = current + points
+#   else
+#     p array[string] = points
+#   end
+# end
+# p array
+# array = array.sort_by { |_string, points| -points }
+
+# array.each { |string, points| puts "#{string} #{points}" }
+
+
+# # paiza Crank---------------------------------------------------------
+# num = gets.to_i
+
+# blood_array = {}
+# (1..num).each do
+#   name, blood_type = gets.chomp.split(" ")
+#   blood_array[name] = blood_type
+# end
+
+# num2 = gets.to_i
+
+# fortune_array = {}
+# (1..num2).each do
+#   blood_type, fortune = gets.chomp.split(" ")
+#   fortune_array[blood_type] = fortune
+# end
+
+# blood_array.each do |a, b|
+#   puts "#{a} #{fortune_array[b]}"
+# end
+
+# # 模範解答---------------------------------------------------------
+# n = gets.chomp.to_i
+# user2blood = {}
+# (1..n).each do
+#   user, blood = gets.chomp.split(" ")
+#   user2blood[user] = blood
+# end
+
+# m = gets.chomp.to_i
+# blood2result = {}
+# (1..m).each do
+#   blood, result = gets.chomp.split(" ")
+#   blood2result[blood] = result
+# end
+
+# users = user2blood.keys
+# users.each do |user|
+#   blood = user2blood[user]
+#   result = blood2result[blood]
+#   puts "#{user} #{result}"
+# end
+
+# paiza 五目並べ（縦）------------------------------------------------
+array = 5.times.map { gets.chomp.chars }
+
+array = array.transpose
+
+result = "D"
+array.each do |ele|
+  if ele.uniq == ["X"]
+    result = "X"
+  elsif ele.uniq == ["O"]
+    result = "O"
   end
 end
-p array
-array = array.sort_by { |_string, points| -points }
 
-array.each { |string, points| puts "#{string} #{points}" }
-
-
-# paiza Crank---------------------------------------------------------
-num = gets.to_i
-
-blood_array = {}
-(1..num).each do
-  name, blood_type = gets.chomp.split(" ")
-  blood_array[name] = blood_type
-end
-
-num2 = gets.to_i
-
-fortune_array = {}
-(1..num2).each do
-  blood_type, fortune = gets.chomp.split(" ")
-  fortune_array[blood_type] = fortune
-end
-
-blood_array.each do |a, b|
-  puts "#{a} #{fortune_array[b]}"
-end
+puts result
 
 # 模範解答---------------------------------------------------------
-n = gets.chomp.to_i
-user2blood = {}
-(1..n).each do
-  user, blood = gets.chomp.split(" ")
-  user2blood[user] = blood
+board = []
+result = "D"
+
+# 盤面の初期化
+(1..5).each { board.push(gets.chomp.split("")) }
+
+(0..4).each do |i|
+  o = 0
+  x = 0
+  board.each do |row|
+    if row[i] == "O"
+      o = o + 1
+    elsif row[i] == "X"
+      x = x + 1
+    end
+  end
+
+  if o == 5
+    result = "O"
+    break
+  elsif x == 5
+    result = "X"
+    break
+  end
 end
 
-m = gets.chomp.to_i
-blood2result = {}
-(1..m).each do
-  blood, result = gets.chomp.split(" ")
-  blood2result[blood] = result
-end
-
-users = user2blood.keys
-users.each do |user|
-  blood = user2blood[user]
-  result = blood2result[blood]
-  puts "#{user} #{result}"
-end
+puts result
