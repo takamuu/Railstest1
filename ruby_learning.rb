@@ -3261,3 +3261,89 @@ result = "D"
 end
 
 puts result
+
+# paiza Crank 五目並べ（斜め）----------------------------------
+array = 5.times.map { gets.chomp }
+
+left_x = 0
+left_o = 0
+result = "D"
+array.each_with_index do |ele, index|
+  if ele[index] == "X"
+    left_x += 1
+  elsif ele[index] == "O"
+    left_o += 1
+  end
+end
+
+new_array = array.map { |ele| ele.reverse }
+right_x = 0
+right_o = 0
+new_array.each_with_index do |ele, index|
+  if ele[index] == "X"
+    right_x += 1
+  elsif ele[index] == "O"
+    right_o += 1
+  end
+end
+
+if left_x == 5 || right_x == 5
+  result = "X"
+elsif left_o == 5 || right_o == 5
+  result = "O"
+end
+
+puts result
+
+# paiza Brank 五目並べ-----------------------------------------
+array = 5.times.map { gets.chomp.chars }
+
+result = "D"
+array.each do |ele|
+  if ele.uniq == "."
+    next
+  elsif ele.uniq.count == 1
+    result = ele.uniq
+    break
+  end
+end
+
+vertical_array = array.transpose
+
+vertical_array.each do |ele|
+  if ele.uniq == "."
+    next
+  elsif ele.uniq.count == 1
+    p result = ele.uniq
+    break
+  end
+end
+
+left_x = 0
+left_o = 0
+array.each_with_index do |ele, index|
+  if ele[index] == "X"
+    left_x += 1
+  elsif ele[index] == "O"
+    left_o += 1
+  end
+end
+
+new_array = array.map { |ele| ele.reverse }
+right_x = 0
+right_o = 0
+new_array.each_with_index do |ele, index|
+  if ele[index] == "X"
+    right_x += 1
+  elsif ele[index] == "O"
+    right_o += 1
+  end
+end
+
+if left_x == 5 || right_x == 5
+  result = "X"
+elsif left_o == 5 || right_o == 5
+  result = "O"
+end
+
+puts result
