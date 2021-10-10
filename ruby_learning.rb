@@ -3217,133 +3217,315 @@
 #   puts "#{user} #{result}"
 # end
 
-# paiza 五目並べ（縦）------------------------------------------------
-array = 5.times.map { gets.chomp.chars }
+# # paiza 五目並べ（縦）------------------------------------------------
+# array = 5.times.map { gets.chomp.chars }
 
-array = array.transpose
+# array = array.transpose
 
-result = "D"
-array.each do |ele|
-  if ele.uniq == ["X"]
-    result = "X"
-  elsif ele.uniq == ["O"]
-    result = "O"
+# result = "D"
+# array.each do |ele|
+#   if ele.uniq == ["X"]
+#     result = "X"
+#   elsif ele.uniq == ["O"]
+#     result = "O"
+#   end
+# end
+
+# puts result
+
+# # 模範解答---------------------------------------------------------
+# board = []
+# result = "D"
+
+# # 盤面の初期化
+# (1..5).each { board.push(gets.chomp.split("")) }
+
+# (0..4).each do |i|
+#   o = 0
+#   x = 0
+#   board.each do |row|
+#     if row[i] == "O"
+#       o = o + 1
+#     elsif row[i] == "X"
+#       x = x + 1
+#     end
+#   end
+
+#   if o == 5
+#     result = "O"
+#     break
+#   elsif x == 5
+#     result = "X"
+#     break
+#   end
+# end
+
+# puts result
+
+# # paiza Crank 五目並べ（斜め）----------------------------------
+# array = 5.times.map { gets.chomp }
+
+# left_x = 0
+# left_o = 0
+# result = "D"
+# array.each_with_index do |ele, index|
+#   if ele[index] == "X"
+#     left_x += 1
+#   elsif ele[index] == "O"
+#     left_o += 1
+#   end
+# end
+
+# new_array = array.map { |ele| ele.reverse }
+# right_x = 0
+# right_o = 0
+# new_array.each_with_index do |ele, index|
+#   if ele[index] == "X"
+#     right_x += 1
+#   elsif ele[index] == "O"
+#     right_o += 1
+#   end
+# end
+
+# if left_x == 5 || right_x == 5
+#   result = "X"
+# elsif left_o == 5 || right_o == 5
+#   result = "O"
+# end
+
+# puts result
+
+# # paiza Brank 五目並べ-----------------------------------------
+# array = 5.times.map { gets.chomp.chars }
+
+# result = "D"
+# array.each do |ele|
+#   if ele.uniq.count == 1
+#     if ele.uniq == ["."]
+#       next
+#     else
+#       result = ele.uniq[0]
+#       break
+#     end
+#   end
+# end
+
+# vertical_array = array.transpose
+
+# vertical_array.each do |ele|
+#   if ele.uniq.count == 1
+#     if ele.uniq == ["."]
+#       next
+#     else
+#       result = ele.uniq[0]
+#       break
+#     end
+#   end
+# end
+
+# left_x = 0
+# left_o = 0
+# array.each_with_index do |ele, index|
+#   if ele[index] == "X"
+#     left_x += 1
+#   elsif ele[index] == "O"
+#     left_o += 1
+#   end
+# end
+
+# new_array = array.map { |ele| ele.reverse }
+# right_x = 0
+# right_o = 0
+# new_array.each_with_index do |ele, index|
+#   if ele[index] == "X"
+#     right_x += 1
+#   elsif ele[index] == "O"
+#     right_o += 1
+#   end
+# end
+
+# if left_x == 5 || right_x == 5
+#   result = "X"
+# elsif left_o == 5 || right_o == 5
+#   result = "O"
+# end
+
+# puts result
+
+# # 模範解答--------------------------------------------
+# $board = []
+
+# # 盤面の初期化
+# (1..5).each { $board.push(gets.chomp.split("")) }
+
+# def aligned?(o, x)
+#   if o == 5
+#     "O"
+#   elsif x == 5
+#     "X"
+#   else
+#     "D"
+#   end
+# end
+
+# def row_aligned?
+#   result = ""
+
+#   $board.each do |row|
+#     o = 0
+#     x = 0
+#     (0..4).each do |i|
+#       if row[i] == "O"
+#         o = o + 1
+#       elsif row[i] == "X"
+#         x = x + 1
+#       else
+#         break
+#       end
+#     end
+
+#     result = aligned?(o, x)
+#     break if result != "D"
+#   end
+
+#   result
+# end
+
+# def collum_aligned?
+#   result = ""
+
+#   (0..4).each do |i|
+#     o = 0
+#     x = 0
+#     $board.each do |row|
+#       if row[i] == "O"
+#         o = o + 1
+#       elsif row[i] == "X"
+#         x = x + 1
+#       end
+#     end
+
+#     result = aligned?(o, x)
+#     break if result != "D"
+#   end
+
+#   result
+# end
+
+# def oblique_aligned?
+#   result = ""
+
+#   (0..1).each do |time|
+#     i = 0
+
+#     if time.zero?
+#       j = 0
+#     else
+#       j = 4
+#     end
+
+#     o = 0
+#     x = 0
+#     (1..5).each do
+#       if $board[i][j] == "O"
+#         o = o + 1
+#       elsif $board[i][j] == "X"
+#         x = x + 1
+#       end
+
+#       i = i + 1
+
+#       if time.zero?
+#         j = j + 1
+#       else
+#         j = j - 1
+#       end
+#     end
+
+#     result = aligned?(o, x)
+#     break if result != "D"
+#   end
+
+#   result
+# end
+
+# if row_aligned? == "O" || collum_aligned? == "O" || oblique_aligned? == "O"
+#   puts "O"
+# elsif row_aligned? == "X" || collum_aligned? == "X" || oblique_aligned? == "X"
+#   puts "X"
+# else
+#   puts "D"
+# end
+
+num = []
+strings = [1, 4, 10, 20]
+# (0..3).each do |i|
+#   (1..3).each do |j|
+#     tem = strings.slice(i, j) 
+#     if tem.sum >= 12
+#       num << j
+#       break
+#     end
+#   end
+# end
+tem = 0
+index = 0
+start_num = 0
+end_num = 3
+M = 4
+T = 3
+(1..(M + 1 - T)).each do
+  strings.each do |ele|
+    
+    if index < end_num
+        tem += strings[index]
+        if tem >= 12
+          num = index + 1
+          break
+        end
+    elsif index >= end_num
+      break
+    end
+    index += 1
+  end
+end
+p tem
+p num
+
+# paiza Brank B098:バズの検出---------------------------------------------------------
+num, monitoring, time_calc, likes = gets.split(" ").map(&:to_i)
+# p num, monitoring, time, likes
+
+array = []
+array = monitoring.times.map { gets.chomp.split(" ").map(&:to_i) }
+
+new_array = array.transpose
+# p new_array
+
+def output(answer)
+  if answer.empty?
+    puts "#{"no"} #{0}"
+  else
+    puts "#{"yes"} #{answer.min}"
   end
 end
 
-puts result
+temporary = 0
+answer = []
 
-# 模範解答---------------------------------------------------------
-board = []
-result = "D"
-
-# 盤面の初期化
-(1..5).each { board.push(gets.chomp.split("")) }
-
-(0..4).each do |i|
-  o = 0
-  x = 0
-  board.each do |row|
-    if row[i] == "O"
-      o = o + 1
-    elsif row[i] == "X"
-      x = x + 1
+new_array.each do |element|
+  (0..(monitoring - time_calc)).each do |i|
+    (1..time_calc).each do |j|
+      if j - 1 < time_calc
+        temporary = element.slice(i, j)
+        if temporary.sum >= likes
+          answer << i + j
+          break
+        end
+      end
     end
   end
-
-  if o == 5
-    result = "O"
-    break
-  elsif x == 5
-    result = "X"
-    break
-  end
+  temporary = 0
+  output(answer)
+  answer = []
 end
-
-puts result
-
-# paiza Crank 五目並べ（斜め）----------------------------------
-array = 5.times.map { gets.chomp }
-
-left_x = 0
-left_o = 0
-result = "D"
-array.each_with_index do |ele, index|
-  if ele[index] == "X"
-    left_x += 1
-  elsif ele[index] == "O"
-    left_o += 1
-  end
-end
-
-new_array = array.map { |ele| ele.reverse }
-right_x = 0
-right_o = 0
-new_array.each_with_index do |ele, index|
-  if ele[index] == "X"
-    right_x += 1
-  elsif ele[index] == "O"
-    right_o += 1
-  end
-end
-
-if left_x == 5 || right_x == 5
-  result = "X"
-elsif left_o == 5 || right_o == 5
-  result = "O"
-end
-
-puts result
-
-# paiza Brank 五目並べ-----------------------------------------
-array = 5.times.map { gets.chomp.chars }
-
-result = "D"
-array.each do |ele|
-  if ele.uniq == "."
-    next
-  elsif ele.uniq.count == 1
-    result = ele.uniq
-    break
-  end
-end
-
-vertical_array = array.transpose
-
-vertical_array.each do |ele|
-  if ele.uniq == "."
-    next
-  elsif ele.uniq.count == 1
-    p result = ele.uniq
-    break
-  end
-end
-
-left_x = 0
-left_o = 0
-array.each_with_index do |ele, index|
-  if ele[index] == "X"
-    left_x += 1
-  elsif ele[index] == "O"
-    left_o += 1
-  end
-end
-
-new_array = array.map { |ele| ele.reverse }
-right_x = 0
-right_o = 0
-new_array.each_with_index do |ele, index|
-  if ele[index] == "X"
-    right_x += 1
-  elsif ele[index] == "O"
-    right_o += 1
-  end
-end
-
-if left_x == 5 || right_x == 5
-  result = "X"
-elsif left_o == 5 || right_o == 5
-  result = "O"
-end
-
-puts result
