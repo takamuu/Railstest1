@@ -3529,3 +3529,21 @@ new_array.each do |element|
   output(answer)
   answer = []
 end
+
+# paiza C096:夏休み----------------------------------------------------
+num = gets.chomp.to_i
+
+days = []
+result = "OK"
+(1..num).each do
+  start, finish = gets.chomp.split(" ").map(&:to_i)
+  if days.empty?
+    days = (start..finish).to_a
+  else
+    days = days & (start..finish).to_a
+    if days.empty?
+      result = "NG"
+    end
+  end
+end
+puts result
