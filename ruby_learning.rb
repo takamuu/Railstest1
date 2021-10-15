@@ -3457,8 +3457,8 @@
 #   puts "D"
 # end
 
-num = []
-strings = [1, 4, 10, 20]
+# num = []
+# strings = [1, 4, 10, 20]
 # (0..3).each do |i|
 #   (1..3).each do |j|
 #     tem = strings.slice(i, j) 
@@ -3468,82 +3468,160 @@ strings = [1, 4, 10, 20]
 #     end
 #   end
 # end
-tem = 0
-index = 0
-start_num = 0
-end_num = 3
-M = 4
-T = 3
-(1..(M + 1 - T)).each do
-  strings.each do |ele|
+# tem = 0
+# index = 0
+# start_num = 0
+# end_num = 3
+# M = 4
+# T = 3
+# (1..(M + 1 - T)).each do
+#   strings.each do |ele|
     
-    if index < end_num
-        tem += strings[index]
-        if tem >= 12
-          num = index + 1
-          break
-        end
-    elsif index >= end_num
-      break
-    end
-    index += 1
+#     if index < end_num
+#         tem += strings[index]
+#         if tem >= 12
+#           num = index + 1
+#           break
+#         end
+#     elsif index >= end_num
+#       break
+#     end
+#     index += 1
+#   end
+# end
+# p tem
+# p num
+
+# # paiza Brank B098:バズの検出---------------------------------------------------------
+# num, monitoring, time_calc, likes = gets.split(" ").map(&:to_i)
+# # p num, monitoring, time, likes
+
+# array = []
+# array = monitoring.times.map { gets.chomp.split(" ").map(&:to_i) }
+
+# new_array = array.transpose
+# # p new_array
+
+# def output(answer)
+#   if answer.empty?
+#     puts "#{"no"} #{0}"
+#   else
+#     puts "#{"yes"} #{answer.min}"
+#   end
+# end
+
+# temporary = 0
+# answer = []
+
+# new_array.each do |element|
+#   (0..(monitoring - time_calc)).each do |i|
+#     (1..time_calc).each do |j|
+#       if j - 1 < time_calc
+#         temporary = element.slice(i, j)
+#         if temporary.sum >= likes
+#           answer << i + j
+#           break
+#         end
+#       end
+#     end
+#   end
+#   temporary = 0
+#   output(answer)
+#   answer = []
+# end
+
+# # paiza C096:夏休み----------------------------------------------------
+# num = gets.chomp.to_i
+
+# days = []
+# result = "OK"
+# (1..num).each do
+#   start, finish = gets.chomp.split(" ").map(&:to_i)
+#   if days.empty?
+#     days = (start..finish).to_a
+#   else
+#     days = days & (start..finish).to_a
+#     if days.empty?
+#       result = "NG"
+#     end
+#   end
+# end
+# puts result
+
+# # paiza C048:タダ飲みコーヒー--------------------------------------
+# price, ratio = gets.split(" ").map(&:to_i)
+# # p price, ratio
+
+# def calc(ratio)
+#   ratio.to_f / 100.to_f
+# end
+
+# total_price = price
+# until price == 0
+#   price = (price - (price * calc(ratio))).floor
+#   total_price += price
+# end
+
+# p total_price
+
+# paiza C035:試験の合格判定-----------------------------------
+num = gets.to_i
+
+@answer = 0
+@score = []
+
+def get_score(subject)
+  (1..5).each do |i|
+    @score << subject[i].to_i
   end
 end
-p tem
-p num
 
-# paiza Brank B098:バズの検出---------------------------------------------------------
-num, monitoring, time_calc, likes = gets.split(" ").map(&:to_i)
-# p num, monitoring, time, likes
-
-array = []
-array = monitoring.times.map { gets.chomp.split(" ").map(&:to_i) }
-
-new_array = array.transpose
-# p new_array
-
-def output(answer)
-  if answer.empty?
-    puts "#{"no"} #{0}"
-  else
-    puts "#{"yes"} #{answer.min}"
+def science_calc(subject)
+  get_score(subject)
+  if 160 <= @score[1..2].sum && 350 <= @score[0..4].sum
+    @answer += 1
   end
 end
 
-temporary = 0
-answer = []
-
-new_array.each do |element|
-  (0..(monitoring - time_calc)).each do |i|
-    (1..time_calc).each do |j|
-      if j - 1 < time_calc
-        temporary = element.slice(i, j)
-        if temporary.sum >= likes
-          answer << i + j
-          break
-        end
-      end
-    end
+def l_calc(subject)
+  get_score(subject)
+  if 160 <= @score[3..4].sum && 350 <= @score.sum
+    @answer += 1
   end
-  temporary = 0
-  output(answer)
-  answer = []
 end
 
-# paiza C096:夏休み----------------------------------------------------
-num = gets.chomp.to_i
-
-days = []
-result = "OK"
 (1..num).each do
-  start, finish = gets.chomp.split(" ").map(&:to_i)
-  if days.empty?
-    days = (start..finish).to_a
-  else
-    days = days & (start..finish).to_a
-    if days.empty?
-      result = "NG"
-    end
+  subject = gets.chomp.split(" ").map(&:to_s)
+  case subject[0]
+  when "s"
+    science_calc(subject)
+  when "l"
+    l_calc(subject)
+  end
+  @score = []
+end
+
+puts @answer
+
+# paiza C093:【キャンペーン問題】下桁ルール-------------------
+bob, alice = gets.split(" ").map(&:to_s)
+
+def calc(name)
+  @num = 0
+  name.chars.each do |i|
+    @num += i.to_i
   end
 end
-puts result
+
+
+calc(bob)
+bob1 = @num % 10
+calc(alice)
+alice1 = @num % 10
+if bob1 == alice1
+  puts "Draw"
+elsif bob1 < alice1
+  puts "Alice"
+elsif bob1 > alice1
+  puts "Bob"
+end
